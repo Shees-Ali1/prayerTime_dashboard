@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "511400534038",
+    "project_id": "prayertime-20de9",
+    "storage_bucket": "prayertime-20de9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511400534038:android:e037ac3dfb849024195537",
+        "android_client_info": {
+          "package_name": "com.example.prayertime_dashboard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPIm6IhcrpmQxiz6qD3FctAF1rPmE751E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511400534038:android:0dd88a546bc71caa195537",
+        "android_client_info": {
+          "package_name": "com.example.prayertimesproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPIm6IhcrpmQxiz6qD3FctAF1rPmE751E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
