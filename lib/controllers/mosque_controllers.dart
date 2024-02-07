@@ -8,6 +8,7 @@ class MosqueController extends GetxController {
   TextEditingController mosqueController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  TextEditingController imageController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController websiteController = TextEditingController();
   TextEditingController latController = TextEditingController();
@@ -39,6 +40,7 @@ class MosqueController extends GetxController {
           locationController.text.isNotEmpty &&
           addressController.text.isNotEmpty &&
           websiteController.text.isNotEmpty &&
+          imageController.text.isNotEmpty&&
           latController.text.isNotEmpty &&
           lngController.text.isNotEmpty) {
         // Convert latitude and longitude values to double
@@ -58,13 +60,13 @@ class MosqueController extends GetxController {
           'address': addressController.text,
           'website': websiteController.text,
           'latlng': latLng,
-           'image':'',
+           'image':imageController.text,
           'prayers':[],
         });
         // Update the document with its own ID
         await docRef.update({'docId': docRef.id});
+        Get.snackbar("Sucess", "Mosque has been added");
 
-        print('Successfully Entered');
         // Clear the text fields after adding the mosque
         mosqueController.clear();
         locationController.clear();

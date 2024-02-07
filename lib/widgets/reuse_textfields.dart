@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReuseTextFields extends StatelessWidget {
   final String text;
@@ -7,17 +8,17 @@ class ReuseTextFields extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback? onTap;
   final bool readonly = false;
-  final void Function(String)? onChanged; // Changed the type to match TextFormField's onChanged
+  final void Function(String)? onChanged;
   const ReuseTextFields({super.key, required this.text, required this.hintText, required this.prefixicon, required this.controller, this.onTap, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return  Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+      padding:  EdgeInsets.symmetric(horizontal: 18.0.w),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10,),
+            SizedBox(height: 10.h,),
             Text(text),
             TextFormField(
               onTap: (){
@@ -36,7 +37,7 @@ class ReuseTextFields extends StatelessWidget {
               decoration: InputDecoration(
               hintText: hintText,
               prefixIcon: Icon(prefixicon),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r)),
             ),),
 
           ],

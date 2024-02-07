@@ -139,7 +139,7 @@ final TextEditingController ishanamecontroller=TextEditingController();
               controller: prayersController.islamicdatecontroller,
             ),
             SizedBox(
-              height: 20,
+              height: 20.h,
             ),
             Divider(
               color: Colors.teal,
@@ -158,35 +158,35 @@ final TextEditingController ishanamecontroller=TextEditingController();
                     prefixicon: Icons.nights_stay_outlined,
                     controller: fajrnamecontroller,
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
 
                   PrayersField(
                     text: "Prayer Time",
-                    hintText: "12:44",
+                    hintText: "04:44",
                     prefixicon: Icons.web,
                     controller: prayersController.fajrprayerTimecontroller,
                     onTap: (){
                       _selectDateTime(context,prayersController.fajrprayerTimecontroller);
                     },
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
 
                   PrayersField(
                     text: "Prayer Jammah Time",
 
-                    hintText: "12:44",
+                    hintText: "05:00",
                     prefixicon: Icons.web,
                     controller: prayersController.fajrjammahTimecontroller,
                     onTap: (){
                       _selectDateTime(context,prayersController.fajrjammahTimecontroller);
                     },
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w),
 
                   PrayersField(
                     text: "Prayer End Time",
 
-                    hintText: "12:44",
+                    hintText: "06:50",
                     prefixicon: Icons.web,
                     controller: prayersController.fajrprayerendTimecontroller,
                     onTap: (){
@@ -208,26 +208,26 @@ final TextEditingController ishanamecontroller=TextEditingController();
                     controller: sunrisenamecontroller,
                   ),
 
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
                   PrayersField(
-                    hintText: "12:44",
+                    hintText: "06:51",
                     prefixicon: Icons.date_range,
                     controller: prayersController.sunriseprayerTimecontroller,
                     onTap: (){
                       _selectDateTime(context,prayersController.sunriseprayerTimecontroller);
                     },
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
 
                   PrayersField(
-                    hintText: "19:30",
+                    hintText: "06:51",
                     prefixicon: Icons.date_range_outlined,
-                    controller: prayersController.sunrisejammahTimecontroller,
+                    controller: prayersController.sunriseprayerTimecontroller,
                     onTap: (){
-                      _selectDateTime(context,prayersController.sunrisejammahTimecontroller);
+                      _selectDateTime(context,prayersController.sunriseprayerTimecontroller);
                     },
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
                   PrayersField(
                     hintText: "12:44",
                     prefixicon: Icons.date_range_rounded,
@@ -251,28 +251,28 @@ final TextEditingController ishanamecontroller=TextEditingController();
                     controller: duhrnamecontroller,
                   ),
 
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
                   PrayersField(
-                    hintText: "12:44",
+                    hintText: "12:45",
                     prefixicon: Icons.date_range,
                     controller: prayersController.duhrprayerTimecontroller,
                     onTap: (){
                       _selectDateTime(context,prayersController.duhrprayerTimecontroller);
                     },
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
 
                   PrayersField(
-                    hintText: "19:30",
+                    hintText: "13:00",
                     prefixicon: Icons.date_range_outlined,
                     controller: prayersController.duhrjammahTimecontroller,
                     onTap: (){
                       _selectDateTime(context,prayersController.duhrjammahTimecontroller);
                     },
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
                   PrayersField(
-                    hintText: "12:44",
+                    hintText: "15:44",
                     prefixicon: Icons.date_range_rounded,
                     controller: prayersController.duhrprayerendTimecontroller,
                     onTap: (){
@@ -294,30 +294,30 @@ final TextEditingController ishanamecontroller=TextEditingController();
                     controller: asrnamecontroller,
                   ),
 
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
                   PrayersField(
-                    hintText: "12:44",
+                    hintText: "15:45",
                     prefixicon: Icons.date_range,
                     controller: prayersController.asrprayerTimecontroller,
                     onTap: (){
                       _selectDateTime(context,prayersController.asrprayerTimecontroller);
                     },
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
 
                   PrayersField(
-                    hintText: "19:30",
+                    hintText: "16:01",
                     prefixicon: Icons.date_range_outlined,
                     controller: prayersController.asrjammahTimecontroller,
                     onTap: (){
                       _selectDateTime(context,prayersController.asrjammahTimecontroller);
                     },
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
                   PrayersField(
-                    hintText: "12:44",
+                    hintText: "18:10",
                     prefixicon: Icons.date_range_rounded,
-                    controller: prayersController.duhrprayerendTimecontroller,
+                    controller: prayersController.asrprayerendTimecontroller,
                     onTap: (){
                       _selectDateTime(context,prayersController.asrprayerendTimecontroller);
                     },
@@ -333,32 +333,32 @@ final TextEditingController ishanamecontroller=TextEditingController();
                   PrayersField(
                     enabled: false,
                     hintText: "Maghrib",
-                    prefixicon: Icons.wb_sunny_sharp,
+                    prefixicon: Icons.dark_mode_outlined,
                     controller: maghribnamecontroller,
                   ),
 
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
                   PrayersField(
-                    hintText: "12:44",
+                    hintText: "18:11",
                     prefixicon: Icons.date_range,
                     controller: prayersController.maghribprayerTimecontroller,
                     onTap: (){
                       _selectDateTime(context,prayersController.maghribprayerTimecontroller);
                     },
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
 
                   PrayersField(
-                    hintText: "19:30",
+                    hintText: "18:30",
                     prefixicon: Icons.date_range_outlined,
                     controller: prayersController.maghribjammahTimecontroller,
                     onTap: (){
                       _selectDateTime(context,prayersController.maghribjammahTimecontroller);
                     },
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
                   PrayersField(
-                    hintText: "12:44",
+                    hintText: "20:30",
                     prefixicon: Icons.date_range_rounded,
                     controller: prayersController.maghribprayerendTimecontroller,
                     onTap: (){
@@ -376,32 +376,32 @@ final TextEditingController ishanamecontroller=TextEditingController();
                   PrayersField(
                     enabled: false,
                     hintText: "Isha",
-                    prefixicon: Icons.wb_sunny_sharp,
+                    prefixicon: Icons.nights_stay,
                     controller: ishanamecontroller,
                   ),
 
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
                   PrayersField(
-                    hintText: "12:44",
+                    hintText: "20:31",
                     prefixicon: Icons.date_range,
                     controller: prayersController.ishaprayerTimecontroller,
                     onTap: (){
                       _selectDateTime(context,prayersController.ishaprayerTimecontroller);
                     },
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
 
                   PrayersField(
-                    hintText: "19:30",
+                    hintText: "20:50",
                     prefixicon: Icons.date_range_outlined,
                     controller: prayersController.ishajammahTimecontroller,
                     onTap: (){
                       _selectDateTime(context,prayersController.ishajammahTimecontroller);
                     },
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 20.w,),
                   PrayersField(
-                    hintText: "12:44",
+                    hintText: "23:59",
                     prefixicon: Icons.date_range_rounded,
                     controller: prayersController.ishaprayerendTimecontroller,
                     onTap: (){
@@ -412,7 +412,7 @@ final TextEditingController ishanamecontroller=TextEditingController();
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 20.h,
             ),
 
 

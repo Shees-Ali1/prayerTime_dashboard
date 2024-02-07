@@ -2,19 +2,48 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:prayertime_dashboard/controllers/mosque_controllers.dart';
+import 'package:prayertime_dashboard/screens/mosque_info.dart';
 import 'package:prayertime_dashboard/screens/prayerstime_screen.dart';
 import 'package:prayertime_dashboard/widgets/input_textfields.dart';
 
 import 'AddPrayersScreen.dart';
 
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final MosqueController mosqueController = Get.put(MosqueController());
+  TextEditingController searchController = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    mosqueController.fetchMosques();
+    super.initState();
+  }
+  Future<void> _showDeleteConfirmationDialog(String docId, String mosqueName) async {
+    return Get.defaultDialog(
+      title: 'Delete Mosque?',
+      content: Text('Are you sure you want to delete $mosqueName?'),
+      textCancel: 'No',
+      textConfirm: 'Yes',
+      onConfirm: () {
+        mosqueController.deleteMosque(docId);
+        Get.back(); // Close the dialog
+      },
+      onCancel: () {
+        Get.back(); // Close the dialog
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final MosqueController mosqueController = Get.put(MosqueController());
-    TextEditingController searchController = TextEditingController();
+
 
     return GetBuilder<MosqueController>(builder: (logic) {
       return Scaffold(
@@ -95,13 +124,24 @@ class HomeScreen extends StatelessWidget {
                             child: ListTile(
                               title: Text(mosques['mosque']),
                               subtitle: Text(mosques['location']),
-                              trailing: GestureDetector(
-                                  onTap: (){
-                                    mosqueController.deleteMosque(docid);
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
 
+                                children: [
+                                  GestureDetector(
+                                      onTap: (){
+                                        _showDeleteConfirmationDialog(docid,mosqueName);
 
-                                  },
-                                  child: Icon(Icons.delete)),
+                                      },
+                                      child: Icon(Icons.delete)),
+                                  SizedBox(width: 10.w,),
+                                  GestureDetector(
+                                      onTap: (){
+                                        Get.to(MosqueInfo());
+                                      },
+                                      child: Icon(Icons.info)),
+                                ],
+                              ),
 
                             )),
                       ),

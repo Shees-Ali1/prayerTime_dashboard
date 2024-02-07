@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:prayertime_dashboard/controllers/mosque_controllers.dart';
+import 'package:prayertime_dashboard/screens/home_screen.dart';
 
 class PrayersController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -59,7 +60,6 @@ class PrayersController extends GetxController {
           fajrjammahTimecontroller.text.isNotEmpty &&
           fajrprayerendTimecontroller.text.isNotEmpty &&
           sunriseprayerTimecontroller.text.isNotEmpty &&
-          sunrisejammahTimecontroller.text.isNotEmpty &&
           sunriseprayerendTimecontroller.text.isNotEmpty &&
           duhrprayerTimecontroller.text.isNotEmpty &&
           duhrjammahTimecontroller.text.isNotEmpty &&
@@ -91,18 +91,18 @@ class PrayersController extends GetxController {
                   fajrprayerendTimecontroller.text, 'MMM dd, yyyy HH:mm'),
             },
             {
-              'daytime': 'assets/icons/subah.png',
+             'daytime': 'assets/icons/sunrise.png',
               'prayerNameEnglish': "Sunrise",
               'prayerNameArabic': "الشروق",
               'prayerTime': _parseDateTime(
                   sunriseprayerTimecontroller.text, 'MMM dd, yyyy HH:mm'),
               'jammahTime': _parseDateTime(
-                  sunrisejammahTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  sunriseprayerTimecontroller.text, 'MMM dd, yyyy HH:mm'),
               'prayerendTime': _parseDateTime(
                   sunriseprayerendTimecontroller.text, 'MMM dd, yyyy HH:mm'),
             },
             {
-              'daytime': 'assets/icons/subah.png',
+              'daytime': 'assets/icons/zuhr.png',
               'prayerNameEnglish': "Khutbah,Dhuhr",
               'prayerNameArabic': "الظهر,خطبة",
               'prayerTime': _parseDateTime(
@@ -113,7 +113,7 @@ class PrayersController extends GetxController {
                   duhrprayerendTimecontroller.text, 'MMM dd, yyyy HH:mm'),
             },
             {
-              'daytime': 'assets/icons/subah.png',
+              'daytime': 'assets/icons/asr.png',
               'prayerNameEnglish': "Asr",
               'prayerNameArabic': "العصر",
               'prayerTime': _parseDateTime(
@@ -124,7 +124,7 @@ class PrayersController extends GetxController {
                   asrprayerendTimecontroller.text, 'MMM dd, yyyy HH:mm'),
             },
             {
-              'daytime': 'assets/icons/subah.png',
+              'daytime': 'assets/icons/maghrib.png',
               'prayerNameEnglish': "Mahrib",
               'prayerNameArabic': "المغرب",
               'prayerTime': _parseDateTime(
@@ -135,7 +135,7 @@ class PrayersController extends GetxController {
                   maghribprayerendTimecontroller.text, 'MMM dd, yyyy HH:mm'),
             },
             {
-              'daytime': 'assets/icons/subah.png',
+              'daytime': 'assets/icons/isha.png',
               'prayerNameEnglish': "Isha",
               'prayerNameArabic': "العشاء",
               'prayerTime': _parseDateTime(
@@ -180,6 +180,7 @@ class PrayersController extends GetxController {
 
 
         Get.snackbar('Success', 'Prayers added to the mosque');
+        Get.off(HomeScreen());
       } else {
         Get.snackbar("Can't Add Data", "Enter All Fields");
       }

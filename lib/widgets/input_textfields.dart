@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:prayertime_dashboard/controllers/mosque_controllers.dart';
 import 'package:prayertime_dashboard/widgets/reuse_textfields.dart';
@@ -34,6 +35,12 @@ class CustomInputFields extends StatelessWidget {
               controller: mosqueController.addressController,
             ),
             ReuseTextFields(
+              text: 'Enter Mosque Image Link',
+              hintText: "https://t3.ftcdn.net/jpg/05/62/07/62/360_F_562076238_MrnifbcEToccZXgjcx99h48zC2AtvGGb.jpg",
+              prefixicon: Icons.image,
+              controller: mosqueController.imageController,
+            ),
+            ReuseTextFields(
               text: 'Enter Phone Number',
               hintText: "+123456789",
               prefixicon: Icons.phone,
@@ -57,14 +64,14 @@ class CustomInputFields extends StatelessWidget {
               prefixicon: Icons.location_on_outlined,
               controller: mosqueController.lngController,
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 20.h,),
             ElevatedButton(
               onPressed: () {
                 mosqueController.AddMosque();
               },
               child: Text("Add Data"),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 20.h,),
 
           ],
         ),
