@@ -19,7 +19,7 @@ class ReuseTextFields extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 10.h,),
-            Text(text),
+            Text(text,style: TextStyle(fontWeight: FontWeight.bold)),
             TextFormField(
               onTap: (){
                 if(onTap != null){
