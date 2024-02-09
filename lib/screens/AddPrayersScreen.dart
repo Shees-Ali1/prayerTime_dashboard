@@ -96,335 +96,346 @@ final TextEditingController ishanamecontroller=TextEditingController();
         centerTitle: true,
         backgroundColor: Colors.lightBlueAccent,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ReuseTextFields(
-                text: 'Enter Date',
-                hintText: "February 1, 2024",
-                prefixicon: Icons.mosque,
-                controller: prayersController.datetextController,
+      body: Container(
+        height: Get.height,
+        width: Get.width,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xffC5DFF1), Colors.white],  // You can customize the colors
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ReuseTextFields(
+                  text: 'Enter Date',
+                  hintText: "February 1, 2024",
+                  prefixicon: Icons.mosque,
+                  controller: prayersController.datetextController,
 
-                onTap: () {
-                  _selectDate(context);
+                  onTap: () {
+                    _selectDate(context);
+                  },
+                  onChanged:(value){
+                    print("hola");
+                    prayersController.islamicdatecontroller.clear();
+                    prayersController.fajrprayerTimecontroller.clear();
+                    prayersController.fajrjammahTimecontroller.clear();
+                    prayersController.fajrprayerendTimecontroller.clear();
+                    prayersController.sunriseprayerTimecontroller.clear();
+                    prayersController.sunrisejammahTimecontroller.clear();
+                    prayersController.sunriseprayerendTimecontroller.clear();
+                    prayersController.duhrprayerTimecontroller.clear();
+                    prayersController.duhrjammahTimecontroller.clear();
+                    prayersController.duhrprayerendTimecontroller.clear();
+                    prayersController.asrprayerTimecontroller.clear();
+                    prayersController.asrjammahTimecontroller.clear();
+                    prayersController.asrprayerendTimecontroller.clear();
+                    prayersController.maghribprayerTimecontroller.clear();
+                    prayersController.maghribjammahTimecontroller.clear();
+                    prayersController.maghribprayerendTimecontroller.clear();
+                    prayersController.ishaprayerTimecontroller.clear();
+                    prayersController.ishajammahTimecontroller.clear();
+                    prayersController.ishaprayerendTimecontroller.clear();
+                  }
+
+              ),
+              ReuseTextFields(
+                text: 'Enter Islamic Date',
+                hintText: "Rajab 20, 1445 AH",
+                prefixicon: Icons.location_city,
+                controller: prayersController.islamicdatecontroller,
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              Divider(
+                color: Colors.teal,
+              ),
+
+
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PrayersField(
+                      text: "Prayer Name",
+                      enabled: false,
+                      hintText: "Fajr",
+                      prefixicon: Icons.nights_stay_outlined,
+                      controller: fajrnamecontroller,
+                    ),
+                    SizedBox(width: 20.w,),
+
+                    PrayersField(
+                      text: "Prayer Time",
+                      hintText: "04:44",
+                      prefixicon: Icons.web,
+                      controller: prayersController.fajrprayerTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.fajrprayerTimecontroller);
+                      },
+                    ),
+                    SizedBox(width: 20.w,),
+
+                    PrayersField(
+                      text: "Prayer Jammah Time",
+
+                      hintText: "05:00",
+                      prefixicon: Icons.web,
+                      controller: prayersController.fajrjammahTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.fajrjammahTimecontroller);
+                      },
+                    ),
+                    SizedBox(width: 20.w),
+
+                    PrayersField(
+                      text: "Prayer End Time",
+
+                      hintText: "06:50",
+                      prefixicon: Icons.web,
+                      controller: prayersController.fajrprayerendTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.fajrprayerendTimecontroller);
+                      },
+                    ),
+                 ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PrayersField(
+                      enabled: false,
+                      hintText: "Sunrise",
+                      prefixicon: Icons.sunny,
+                      controller: sunrisenamecontroller,
+                    ),
+
+                    SizedBox(width: 20.w,),
+                    PrayersField(
+                      hintText: "06:51",
+                      prefixicon: Icons.date_range,
+                      controller: prayersController.sunriseprayerTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.sunriseprayerTimecontroller);
+                      },
+                    ),
+                    SizedBox(width: 20.w,),
+
+                    PrayersField(
+                      hintText: "06:51",
+                      prefixicon: Icons.date_range_outlined,
+                      controller: prayersController.sunriseprayerTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.sunriseprayerTimecontroller);
+                      },
+                    ),
+                    SizedBox(width: 20.w,),
+                    PrayersField(
+                      hintText: "12:44",
+                      prefixicon: Icons.date_range_rounded,
+                      controller: prayersController.sunriseprayerendTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.sunriseprayerendTimecontroller);
+                      },
+                    ),
+                 ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PrayersField(
+                      enabled: false,
+                      hintText: "Duhr",
+                      prefixicon: Icons.wb_sunny_sharp,
+                      controller: duhrnamecontroller,
+                    ),
+
+                    SizedBox(width: 20.w,),
+                    PrayersField(
+                      hintText: "12:45",
+                      prefixicon: Icons.date_range,
+                      controller: prayersController.duhrprayerTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.duhrprayerTimecontroller);
+                      },
+                    ),
+                    SizedBox(width: 20.w,),
+
+                    PrayersField(
+                      hintText: "13:00",
+                      prefixicon: Icons.date_range_outlined,
+                      controller: prayersController.duhrjammahTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.duhrjammahTimecontroller);
+                      },
+                    ),
+                    SizedBox(width: 20.w,),
+                    PrayersField(
+                      hintText: "15:44",
+                      prefixicon: Icons.date_range_rounded,
+                      controller: prayersController.duhrprayerendTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.duhrprayerendTimecontroller);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PrayersField(
+                      enabled: false,
+                      hintText: "Asr",
+                      prefixicon: Icons.wb_sunny_sharp,
+                      controller: asrnamecontroller,
+                    ),
+
+                    SizedBox(width: 20.w,),
+                    PrayersField(
+                      hintText: "15:45",
+                      prefixicon: Icons.date_range,
+                      controller: prayersController.asrprayerTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.asrprayerTimecontroller);
+                      },
+                    ),
+                    SizedBox(width: 20.w,),
+
+                    PrayersField(
+                      hintText: "16:01",
+                      prefixicon: Icons.date_range_outlined,
+                      controller: prayersController.asrjammahTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.asrjammahTimecontroller);
+                      },
+                    ),
+                    SizedBox(width: 20.w,),
+                    PrayersField(
+                      hintText: "18:10",
+                      prefixicon: Icons.date_range_rounded,
+                      controller: prayersController.asrprayerendTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.asrprayerendTimecontroller);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PrayersField(
+                      enabled: false,
+                      hintText: "Maghrib",
+                      prefixicon: Icons.dark_mode_outlined,
+                      controller: maghribnamecontroller,
+                    ),
+
+                    SizedBox(width: 20.w,),
+                    PrayersField(
+                      hintText: "18:11",
+                      prefixicon: Icons.date_range,
+                      controller: prayersController.maghribprayerTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.maghribprayerTimecontroller);
+                      },
+                    ),
+                    SizedBox(width: 20.w,),
+
+                    PrayersField(
+                      hintText: "18:30",
+                      prefixicon: Icons.date_range_outlined,
+                      controller: prayersController.maghribjammahTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.maghribjammahTimecontroller);
+                      },
+                    ),
+                    SizedBox(width: 20.w,),
+                    PrayersField(
+                      hintText: "20:30",
+                      prefixicon: Icons.date_range_rounded,
+                      controller: prayersController.maghribprayerendTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.maghribprayerendTimecontroller);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PrayersField(
+                      enabled: false,
+                      hintText: "Isha",
+                      prefixicon: Icons.nights_stay,
+                      controller: ishanamecontroller,
+                    ),
+
+                    SizedBox(width: 20.w,),
+                    PrayersField(
+                      hintText: "20:31",
+                      prefixicon: Icons.date_range,
+                      controller: prayersController.ishaprayerTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.ishaprayerTimecontroller);
+                      },
+                    ),
+                    SizedBox(width: 20.w,),
+
+                    PrayersField(
+                      hintText: "20:50",
+                      prefixicon: Icons.date_range_outlined,
+                      controller: prayersController.ishajammahTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.ishajammahTimecontroller);
+                      },
+                    ),
+                    SizedBox(width: 20.w,),
+                    PrayersField(
+                      hintText: "23:59",
+                      prefixicon: Icons.date_range_rounded,
+                      controller: prayersController.ishaprayerendTimecontroller,
+                      onTap: (){
+                        _selectDateTime(context,prayersController.ishaprayerendTimecontroller);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+
+
+
+              ElevatedButton(
+                onPressed: () {
+                  prayersController.addprayers(widget.docId,);
                 },
-                onChanged:(value){
-                  print("hola");
-                  prayersController.islamicdatecontroller.clear();
-                  prayersController.fajrprayerTimecontroller.clear();
-                  prayersController.fajrjammahTimecontroller.clear();
-                  prayersController.fajrprayerendTimecontroller.clear();
-                  prayersController.sunriseprayerTimecontroller.clear();
-                  prayersController.sunrisejammahTimecontroller.clear();
-                  prayersController.sunriseprayerendTimecontroller.clear();
-                  prayersController.duhrprayerTimecontroller.clear();
-                  prayersController.duhrjammahTimecontroller.clear();
-                  prayersController.duhrprayerendTimecontroller.clear();
-                  prayersController.asrprayerTimecontroller.clear();
-                  prayersController.asrjammahTimecontroller.clear();
-                  prayersController.asrprayerendTimecontroller.clear();
-                  prayersController.maghribprayerTimecontroller.clear();
-                  prayersController.maghribjammahTimecontroller.clear();
-                  prayersController.maghribprayerendTimecontroller.clear();
-                  prayersController.ishaprayerTimecontroller.clear();
-                  prayersController.ishajammahTimecontroller.clear();
-                  prayersController.ishaprayerendTimecontroller.clear();
-                }
-
-            ),
-            ReuseTextFields(
-              text: 'Enter Islamic Date',
-              hintText: "Rajab 20, 1445 AH",
-              prefixicon: Icons.location_city,
-              controller: prayersController.islamicdatecontroller,
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Divider(
-              color: Colors.teal,
-            ),
-
-
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  PrayersField(
-                    text: "Prayer Name",
-                    enabled: false,
-                    hintText: "Fajr",
-                    prefixicon: Icons.nights_stay_outlined,
-                    controller: fajrnamecontroller,
-                  ),
-                  SizedBox(width: 20.w,),
-
-                  PrayersField(
-                    text: "Prayer Time",
-                    hintText: "04:44",
-                    prefixicon: Icons.web,
-                    controller: prayersController.fajrprayerTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.fajrprayerTimecontroller);
-                    },
-                  ),
-                  SizedBox(width: 20.w,),
-
-                  PrayersField(
-                    text: "Prayer Jammah Time",
-
-                    hintText: "05:00",
-                    prefixicon: Icons.web,
-                    controller: prayersController.fajrjammahTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.fajrjammahTimecontroller);
-                    },
-                  ),
-                  SizedBox(width: 20.w),
-
-                  PrayersField(
-                    text: "Prayer End Time",
-
-                    hintText: "06:50",
-                    prefixicon: Icons.web,
-                    controller: prayersController.fajrprayerendTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.fajrprayerendTimecontroller);
-                    },
-                  ),
-               ],
+                child: Text("Add Data"),
               ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  PrayersField(
-                    enabled: false,
-                    hintText: "Sunrise",
-                    prefixicon: Icons.sunny,
-                    controller: sunrisenamecontroller,
-                  ),
 
-                  SizedBox(width: 20.w,),
-                  PrayersField(
-                    hintText: "06:51",
-                    prefixicon: Icons.date_range,
-                    controller: prayersController.sunriseprayerTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.sunriseprayerTimecontroller);
-                    },
-                  ),
-                  SizedBox(width: 20.w,),
-
-                  PrayersField(
-                    hintText: "06:51",
-                    prefixicon: Icons.date_range_outlined,
-                    controller: prayersController.sunriseprayerTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.sunriseprayerTimecontroller);
-                    },
-                  ),
-                  SizedBox(width: 20.w,),
-                  PrayersField(
-                    hintText: "12:44",
-                    prefixicon: Icons.date_range_rounded,
-                    controller: prayersController.sunriseprayerendTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.sunriseprayerendTimecontroller);
-                    },
-                  ),
-               ],
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  PrayersField(
-                    enabled: false,
-                    hintText: "Duhr",
-                    prefixicon: Icons.wb_sunny_sharp,
-                    controller: duhrnamecontroller,
-                  ),
-
-                  SizedBox(width: 20.w,),
-                  PrayersField(
-                    hintText: "12:45",
-                    prefixicon: Icons.date_range,
-                    controller: prayersController.duhrprayerTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.duhrprayerTimecontroller);
-                    },
-                  ),
-                  SizedBox(width: 20.w,),
-
-                  PrayersField(
-                    hintText: "13:00",
-                    prefixicon: Icons.date_range_outlined,
-                    controller: prayersController.duhrjammahTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.duhrjammahTimecontroller);
-                    },
-                  ),
-                  SizedBox(width: 20.w,),
-                  PrayersField(
-                    hintText: "15:44",
-                    prefixicon: Icons.date_range_rounded,
-                    controller: prayersController.duhrprayerendTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.duhrprayerendTimecontroller);
-                    },
-                  ),
-                ],
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  PrayersField(
-                    enabled: false,
-                    hintText: "Asr",
-                    prefixicon: Icons.wb_sunny_sharp,
-                    controller: asrnamecontroller,
-                  ),
-
-                  SizedBox(width: 20.w,),
-                  PrayersField(
-                    hintText: "15:45",
-                    prefixicon: Icons.date_range,
-                    controller: prayersController.asrprayerTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.asrprayerTimecontroller);
-                    },
-                  ),
-                  SizedBox(width: 20.w,),
-
-                  PrayersField(
-                    hintText: "16:01",
-                    prefixicon: Icons.date_range_outlined,
-                    controller: prayersController.asrjammahTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.asrjammahTimecontroller);
-                    },
-                  ),
-                  SizedBox(width: 20.w,),
-                  PrayersField(
-                    hintText: "18:10",
-                    prefixicon: Icons.date_range_rounded,
-                    controller: prayersController.asrprayerendTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.asrprayerendTimecontroller);
-                    },
-                  ),
-                ],
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  PrayersField(
-                    enabled: false,
-                    hintText: "Maghrib",
-                    prefixicon: Icons.dark_mode_outlined,
-                    controller: maghribnamecontroller,
-                  ),
-
-                  SizedBox(width: 20.w,),
-                  PrayersField(
-                    hintText: "18:11",
-                    prefixicon: Icons.date_range,
-                    controller: prayersController.maghribprayerTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.maghribprayerTimecontroller);
-                    },
-                  ),
-                  SizedBox(width: 20.w,),
-
-                  PrayersField(
-                    hintText: "18:30",
-                    prefixicon: Icons.date_range_outlined,
-                    controller: prayersController.maghribjammahTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.maghribjammahTimecontroller);
-                    },
-                  ),
-                  SizedBox(width: 20.w,),
-                  PrayersField(
-                    hintText: "20:30",
-                    prefixicon: Icons.date_range_rounded,
-                    controller: prayersController.maghribprayerendTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.maghribprayerendTimecontroller);
-                    },
-                  ),
-                ],
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  PrayersField(
-                    enabled: false,
-                    hintText: "Isha",
-                    prefixicon: Icons.nights_stay,
-                    controller: ishanamecontroller,
-                  ),
-
-                  SizedBox(width: 20.w,),
-                  PrayersField(
-                    hintText: "20:31",
-                    prefixicon: Icons.date_range,
-                    controller: prayersController.ishaprayerTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.ishaprayerTimecontroller);
-                    },
-                  ),
-                  SizedBox(width: 20.w,),
-
-                  PrayersField(
-                    hintText: "20:50",
-                    prefixicon: Icons.date_range_outlined,
-                    controller: prayersController.ishajammahTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.ishajammahTimecontroller);
-                    },
-                  ),
-                  SizedBox(width: 20.w,),
-                  PrayersField(
-                    hintText: "23:59",
-                    prefixicon: Icons.date_range_rounded,
-                    controller: prayersController.ishaprayerendTimecontroller,
-                    onTap: (){
-                      _selectDateTime(context,prayersController.ishaprayerendTimecontroller);
-                    },
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-
-
-
-            ElevatedButton(
-              onPressed: () {
-                prayersController.addprayers(widget.docId,);
-              },
-              child: Text("Add Data"),
-            ),
-
-          ],
+            ],
+          ),
         ),
       ),
     );

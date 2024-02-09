@@ -24,10 +24,9 @@ class DetailPrayersTime extends StatefulWidget {
 }
 
 class _DetailPrayersTimeState extends State<DetailPrayersTime> {
-  void showEditDialog(BuildContext context, dynamic prayertime, String docId,
-      int index, int dateindex) {
-    TextEditingController prayernameController =
-        TextEditingController(text: prayertime["prayerNameEnglish"]);
+
+  void showEditDialog(BuildContext context, dynamic prayertime, String docId, int index, int dateindex) {
+    TextEditingController prayernameController = TextEditingController(text: prayertime["prayerNameEnglish"]);
     TextEditingController prayerTimeController = TextEditingController(
         text: DateFormat('dd MMMM yyyy hh:mm a').format(
             DateTime.fromMillisecondsSinceEpoch(
@@ -42,14 +41,19 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
                 prayertime["prayerendTime"].seconds * 1000)));
 
     Get.defaultDialog(
+      contentPadding: EdgeInsets.symmetric(vertical: 18.h,horizontal: 4.w),
       title: "Edit Prayer Time",
       content: Column(
         children: [
           TextField(
             readOnly: true,
+
             controller: prayernameController,
-            decoration: InputDecoration(labelText: "Prayer Name"),
+            decoration:  InputDecoration(labelText: "Prayer Name",border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r))),
+
           ),
+          SizedBox(height: 15.h,),
+
           GestureDetector(
             onTap: () {
               // Open a time picker dialog when the user taps on the time
@@ -82,10 +86,11 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
             child: AbsorbPointer(
               child: TextField(
                 controller: prayerTimeController,
-                decoration: InputDecoration(labelText: "Prayer Time"),
+                decoration:  InputDecoration(labelText: "Prayer Time",border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r))),
               ),
             ),
           ),
+          SizedBox(height: 15.h,),
 
           GestureDetector(
             onTap: () {
@@ -119,10 +124,11 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
             child: AbsorbPointer(
               child: TextField(
                 controller: jammahTimeController,
-                decoration: InputDecoration(labelText: "Prayer Time"),
+                decoration:  InputDecoration(labelText: "Prayer Time",border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r))),
               ),
             ),
           ),
+          SizedBox(height: 15.h,),
 
           GestureDetector(
             onTap: () {
@@ -156,46 +162,47 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
             child: AbsorbPointer(
               child: TextField(
                 controller: prayerEndTimeController,
-                decoration: InputDecoration(labelText: "Prayer Time"),
+                decoration:  InputDecoration(labelText: "Prayer Time",border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r))),
               ),
             ),
           ),
 
         ],
       ),
-      textConfirm: "Save",
-      confirmTextColor: Colors.white,
-      onConfirm: () async {
+      confirm:ElevatedButton(
+        onPressed: ()async {
 
 
 
 
-         updatePrayerTime(
-            docId,
-            dateindex,
-            index,
-            prayernameController,
-            prayerTimeController,
-            jammahTimeController,
-            prayerEndTimeController);
+          updatePrayerTime(
+              docId,
+              dateindex,
+              index,
+              prayernameController,
+              prayerTimeController,
+              jammahTimeController,
+              prayerEndTimeController);
 
-        Get.back();
-        setState(() {
+          Get.back();
+          setState(() {
 
-        });
-        // Close the dialog
-      },
+          });
+          // Close the dialog
+        },
+        child: Text("Save",style: TextStyle(color: Colors.white),),
+        style: ElevatedButton.styleFrom(
+          fixedSize: Size(200, 40.h),
+          backgroundColor: Colors.black54
+
+        ),
+
+      ),
+
+
     );
   }
-
-  void updatePrayerTime(
-      String documentId,
-      int dateIndex,
-      int prayerIndex,
-      TextEditingController controller,
-      TextEditingController prayerTimeController,
-      TextEditingController jammahTimeController,
-      TextEditingController prayerEndTimeController) async {
+  void updatePrayerTime(String documentId, int dateIndex, int prayerIndex, TextEditingController controller, TextEditingController prayerTimeController, TextEditingController jammahTimeController, TextEditingController prayerEndTimeController) async {
     // Replace 'your_collection' with the actual collection name in Firestore
     CollectionReference prayersCollection =
         FirebaseFirestore.instance.collection('prayerTimes');
@@ -252,12 +259,9 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
           );
         }
 
-        // Update the Firestore document
-        await prayersCollection
+      await prayersCollection
             .doc(documentId)
             .update({'prayers': prayersList}).then((value) => setState((){}));
-        // Trigger a rebuild of the widget
-
         Get.snackbar('Success', "Prayers has been updated");
         // Get.off(HomeScreen());
       }
@@ -271,7 +275,7 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
         title: Text("Prayer Times of ${widget.mosque} at ${widget.date}"),
         centerTitle: true,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Color(0xffC5DFF1),
@@ -283,88 +287,96 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
           ),
         ),
       ),
-      body: ListView.builder(
-          shrinkWrap: true,
-          itemCount: widget.prayerstime.length,
-          itemBuilder: (context, index) {
-            dynamic prayertime = widget.prayerstime[index];
-            // Check if it's Friday (Friday corresponds to weekday 5)
-            bool isFriday = DateTime.now().weekday == DateTime.friday;
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-              child: Card(
-                  child: ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Text("Prayer Name",style: TextStyle(fontWeight: FontWeight.bold),),
-                        Text(
-                          index == 2
-                              ? (isFriday
-                                  ? (prayertime['prayerNameEnglish']
-                                      .toString()
-                                      .split(','))[0]
-                                  : (prayertime['prayerNameEnglish']
-                                      .toString()
-                                      .split(','))[1])
-                              : prayertime['prayerNameEnglish'].toString(),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width:10.w),
-                    Column(
-                      children: [
-                        Text("Prayer Time",style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text(
-                          DateFormat('hh:mm a').format(
-                            DateTime.fromMillisecondsSinceEpoch(
-                                prayertime["prayerTime"].seconds * 1000),
+      body: Container(
+        height: Get.height,
+        width: Get.width,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xffC5DFF1), Colors.white],  // You can customize the colors
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.prayerstime.length,
+            itemBuilder: (context, index) {
+              dynamic prayertime = widget.prayerstime[index];
+              bool isFriday = DateTime.now().weekday == DateTime.friday;
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+                child: Card(
+                    child: ListTile(
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          const Text("Name",style: TextStyle(fontWeight: FontWeight.bold),),
+                          Text(
+                            index == 2
+                                ? (isFriday
+                                    ? (prayertime['prayerNameEnglish']
+                                        .toString()
+                                        .split(','))[0]
+                                    : (prayertime['prayerNameEnglish']
+                                        .toString()
+                                        .split(','))[1])
+                                : prayertime['prayerNameEnglish'].toString(),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width:10.w),
-
-                    Column(
-                      children: [
-                        Text("Jammah Time",style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text(
-                          DateFormat('hh:mm a').format(
-                            DateTime.fromMillisecondsSinceEpoch(
-                                prayertime["jammahTime"].seconds * 1000),
+                        ],
+                      ),
+                      SizedBox(width:10.w),
+                      Column(
+                        children: [
+                          const Text("Prayer",style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(
+                            DateFormat('hh:mm a').format(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                  prayertime["prayerTime"].seconds * 1000),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width:10.w),
-
-                    Column(
-                      children: [
-                        Text("Prayer End Time",style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text(
-                          DateFormat('hh:mm a').format(
-                            DateTime.fromMillisecondsSinceEpoch(
-                                prayertime["prayerendTime"].seconds * 1000),
+                        ],
+                      ),
+                      SizedBox(width:10.w),
+                      Column(
+                        children: [
+                          const Text("Jammah",style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(
+                            DateFormat('hh:mm a').format(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                  prayertime["jammahTime"].seconds * 1000),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width:10.w),
+                        ],
+                      ),
+                      SizedBox(width:10.w),
+                      Column(
+                        children: [
+                          const Text("End Time",style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(
+                            DateFormat('hh:mm a').format(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                  prayertime["prayerendTime"].seconds * 1000),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(width:10.w),
 
-                    GestureDetector(
-                        onTap: () {
-                          // Show the dialog for editing prayer times
-                          showEditDialog(context, prayertime, widget.docId,
-                              index, widget.dateindex);
-                        },
-                        child: Icon(Icons.edit)),
-                  ],
-                ),
-              )),
-            );
-          }),
+                      GestureDetector(
+                          onTap: () {
+                            // Show the dialog for editing prayer times
+                            showEditDialog(context, prayertime, widget.docId,
+                                index, widget.dateindex);
+                          },
+                          child: const Icon(Icons.edit)),
+                    ],
+                  ),
+                )),
+              );
+            }),
+      ),
     );
   }
 }
