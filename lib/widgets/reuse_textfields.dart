@@ -21,6 +21,7 @@ class ReuseTextFields extends StatelessWidget {
             SizedBox(height: 10.h,),
             Text(text,style: TextStyle(fontWeight: FontWeight.bold)),
             TextFormField(
+
               onTap: (){
                 if(onTap != null){
                 onTap!();
@@ -36,6 +37,7 @@ class ReuseTextFields extends StatelessWidget {
                 },
               decoration: InputDecoration(
               hintText: hintText,
+              fillColor: Colors.white,filled: true,
               prefixIcon: Icon(prefixicon),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r)),
             ),),

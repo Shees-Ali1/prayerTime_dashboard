@@ -124,7 +124,7 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
             child: AbsorbPointer(
               child: TextField(
                 controller: jammahTimeController,
-                decoration:  InputDecoration(labelText: "Prayer Time",border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r))),
+                decoration:  InputDecoration(labelText: "Jammah Time",border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r))),
               ),
             ),
           ),
@@ -162,7 +162,7 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
             child: AbsorbPointer(
               child: TextField(
                 controller: prayerEndTimeController,
-                decoration:  InputDecoration(labelText: "Prayer Time",border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r))),
+                decoration:  InputDecoration(labelText: "Prayer End Time",border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r))),
               ),
             ),
           ),
@@ -309,25 +309,30 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
                     child: ListTile(
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                     children: [
-                      Column(
-                        children: [
-                          const Text("Name",style: TextStyle(fontWeight: FontWeight.bold),),
-                          Text(
-                            index == 2
-                                ? (isFriday
-                                    ? (prayertime['prayerNameEnglish']
-                                        .toString()
-                                        .split(','))[0]
-                                    : (prayertime['prayerNameEnglish']
-                                        .toString()
-                                        .split(','))[1])
-                                : prayertime['prayerNameEnglish'].toString(),
-                          ),
-                        ],
+                      SizedBox(
+                        width: 25.w,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("Name",style: TextStyle(fontWeight: FontWeight.bold),),
+                            Text(
+                              index == 2
+                                  ? (isFriday
+                                      ? (prayertime['prayerNameEnglish']
+                                          .toString()
+                                          .split(','))[0]
+                                      : (prayertime['prayerNameEnglish']
+                                          .toString()
+                                          .split(','))[1])
+                                  : prayertime['prayerNameEnglish'].toString(),
+                            ),
+                          ],
+                        ),
                       ),
-                      SizedBox(width:10.w),
                       Column(
+
                         children: [
                           const Text("Prayer",style: TextStyle(fontWeight: FontWeight.bold)),
                           Text(
@@ -338,7 +343,6 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
                           ),
                         ],
                       ),
-                      SizedBox(width:10.w),
                       Column(
                         children: [
                           const Text("Jammah",style: TextStyle(fontWeight: FontWeight.bold)),
@@ -350,7 +354,6 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
                           ),
                         ],
                       ),
-                      SizedBox(width:10.w),
                       Column(
                         children: [
                           const Text("End Time",style: TextStyle(fontWeight: FontWeight.bold)),
@@ -362,7 +365,6 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
                           ),
                         ],
                       ),
-                      SizedBox(width:10.w),
 
                       GestureDetector(
                           onTap: () {

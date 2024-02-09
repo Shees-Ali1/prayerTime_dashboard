@@ -23,6 +23,8 @@ class _MosqueInfoState extends State<MosqueInfo> {
   late TextEditingController locationController;
   late TextEditingController addressController;
   late TextEditingController phoneNumberController;
+  late TextEditingController latController;
+  late TextEditingController lngController;
 
   bool isButtonEnabled = false;
 
@@ -33,12 +35,16 @@ class _MosqueInfoState extends State<MosqueInfo> {
     locationController = TextEditingController(text: widget.mosque['location']);
     addressController = TextEditingController(text: widget.mosque['address']);
     phoneNumberController = TextEditingController(text: widget.mosque['phoneNumber']);
+    latController = TextEditingController(text: widget.mosque['latlng'].latitude.toString());
+    lngController = TextEditingController(text: widget.mosque['latlng'].longitude.toString());
 
     // Add listeners to controllers
     mosqueController.addListener(handleTextChange);
     locationController.addListener(handleTextChange);
     addressController.addListener(handleTextChange);
     phoneNumberController.addListener(handleTextChange);
+    latController.addListener(handleTextChange);
+    lngController.addListener(handleTextChange);
   }
 
   void handleTextChange() {
@@ -46,7 +52,11 @@ class _MosqueInfoState extends State<MosqueInfo> {
     if (mosqueController.text !=  widget.mosque['mosque'] ||
         locationController.text != widget.mosque['location'] ||
         addressController.text != widget.mosque['address'] ||
-        phoneNumberController.text != widget.mosque['phoneNumber']) {
+        phoneNumberController.text != widget.mosque['phoneNumber'] ||
+    latController.text != widget.mosque['latlng'].latitude.toString() ||
+    lngController.text != widget.mosque['latlng'].longitude.toString()
+
+    ) {
       setState(() {
         isButtonEnabled = true;
       });
@@ -60,6 +70,22 @@ class _MosqueInfoState extends State<MosqueInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("${widget.mosque['mosque']}"),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xffC5DFF1),
+                Colors.white
+              ], // You can customize the colors
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+      ),
       body: Container(
         height: Get.height,
         width: Get.width,
@@ -74,10 +100,14 @@ class _MosqueInfoState extends State<MosqueInfo> {
           child: Column(
             children: [
               SizedBox(height: 10.h,),
-              SizedBox(
+              Container(
                 height: 250.h,
-                width: Get.width,
-                child:Image.network( widget.mosque['image'], fit: BoxFit.contain,),
+                width: 150.w,
+                decoration: BoxDecoration(              borderRadius: BorderRadius.circular(15.0.r),
+                    image: DecorationImage(
+                    image: NetworkImage(widget.mosque['image']),
+                fit: BoxFit.cover,
+              ),)
               ),
               ReuseTextFields(
                 prefixicon: Icons.mosque,
@@ -86,7 +116,7 @@ class _MosqueInfoState extends State<MosqueInfo> {
                 hintText: 'Mosque Name',
               ),
               ReuseTextFields(
-                prefixicon: Icons.mosque,
+                prefixicon: Icons.location_on_outlined,
                 controller: locationController,
                 text: 'Mosque Location',
                 hintText: 'Mosque Location',
@@ -103,8 +133,25 @@ class _MosqueInfoState extends State<MosqueInfo> {
                 text: 'Phone Number',
                 hintText: 'Phone Number',
               ),
+              ReuseTextFields(
+                text: 'Latitude',
+                hintText: "50",
+                prefixicon: Icons.language,
+                controller: latController,
+              ),
+              ReuseTextFields(
+                text: 'Longitude',
+                hintText: "71",
+                prefixicon: Icons.location_on_outlined,
+                controller: lngController,
+              ),
               SizedBox(height: 20.h,),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    fixedSize: Size(100.w, 50.h),
+                    backgroundColor: Colors.black54
+
+                ),
                 onPressed: isButtonEnabled
                     ? () async {
                   try {
@@ -116,11 +163,19 @@ class _MosqueInfoState extends State<MosqueInfo> {
                       'location': locationController.text,
                       'address': addressController.text,
                       'phoneNumber': phoneNumberController.text,
+                      'latlng': GeoPoint(
+                        double.parse(latController.text),
+                        double.parse(lngController.text),
+                      ),
                     }, SetOptions(merge: true));
                     widget.mosque['mosque']=mosqueController.text;
                     widget.mosque['location']=locationController.text;
                     widget.mosque['address']=addressController.text;
                     widget.mosque['phoneNumber']=phoneNumberController.text;
+                    widget.mosque['latlng'] = GeoPoint(
+                      double.parse(latController.text),
+                      double.parse(lngController.text),
+                    );
                     Get.snackbar('Success', 'Mosque Data has been updated');
 
 
@@ -132,7 +187,7 @@ class _MosqueInfoState extends State<MosqueInfo> {
                   }
                 }
                     : null,
-                child: Text("Update Mosque"),
+                child: Text("Update Mosque",style: TextStyle(color: isButtonEnabled?Colors.white:Colors.black54),),
               ),
               SizedBox(height: 20.h,),
             ],
@@ -149,6 +204,8 @@ class _MosqueInfoState extends State<MosqueInfo> {
     locationController.dispose();
     addressController.dispose();
     phoneNumberController.dispose();
+    latController.dispose();
+    lngController.dispose();
     super.dispose();
   }
 }

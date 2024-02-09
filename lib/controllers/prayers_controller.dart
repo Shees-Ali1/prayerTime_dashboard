@@ -210,4 +210,41 @@ class PrayersController extends GetxController {
 
     }
 
+
+  @override
+  void dispose() {
+    // Dispose of all your controllers here
+    datetextController.dispose();
+    islamicdatecontroller.dispose();
+
+    fajrprayerTimecontroller.dispose();
+    fajrjammahTimecontroller.dispose();
+    fajrprayerendTimecontroller.dispose();
+
+    sunriseprayerTimecontroller.dispose();
+    sunrisejammahTimecontroller.dispose();
+    sunriseprayerendTimecontroller.dispose();
+
+    duhrprayerTimecontroller.dispose();
+    duhrjammahTimecontroller.dispose();
+    duhrprayerendTimecontroller.dispose();
+
+    asrprayerTimecontroller.dispose();
+    asrjammahTimecontroller.dispose();
+    asrprayerendTimecontroller.dispose();
+
+    maghribprayerTimecontroller.dispose();
+    maghribjammahTimecontroller.dispose();
+    maghribprayerendTimecontroller.dispose();
+
+    ishaprayerTimecontroller.dispose();
+    ishajammahTimecontroller.dispose();
+    ishaprayerendTimecontroller.dispose();
+
+    // Dispose of other resources if needed
+
+    super.dispose();
+  }
+
+
 }

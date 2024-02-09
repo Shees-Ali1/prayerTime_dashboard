@@ -84,10 +84,16 @@ class CustomInputFields extends StatelessWidget {
               ),
               SizedBox(height: 20.h,),
               ElevatedButton(
+
+                style: ElevatedButton.styleFrom(
+                    fixedSize: Size(100.w, 50.h),
+                    backgroundColor: Colors.black54
+
+                ),
                 onPressed: () {
                   mosqueController.AddMosque();
                 },
-                child: Text("Add Data"),
+                child: Text("Add Data",style: TextStyle(color: Colors.white),),
               ),
               SizedBox(height: 20.h,),
 

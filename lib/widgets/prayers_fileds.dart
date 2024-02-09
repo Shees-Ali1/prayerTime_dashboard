@@ -25,8 +25,10 @@ class PrayersField extends StatelessWidget {
             enabled: enabled,
 
 
+
             decoration: InputDecoration(
               hintText: hintText,
+              fillColor: Colors.white,filled: true,
               prefixIcon: Icon(prefixicon),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
             ),),
