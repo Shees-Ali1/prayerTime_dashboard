@@ -93,7 +93,7 @@ class CustomInputFields extends StatelessWidget {
                 onPressed: () {
                   mosqueController.AddMosque();
                 },
-                child: Text("Add Data",style: TextStyle(color: Colors.white),),
+                child: FittedBox(child: Text("Add Data",style: TextStyle(color: Colors.white),)),
               ),
               SizedBox(height: 20.h,),
 

@@ -765,9 +765,11 @@ class _AddPrayersScreenState extends State<AddPrayersScreen> {
                     widget.docId,
                   );
                 },
-                child: Text(
-                  "Add Data",
-                  style: TextStyle(color: Colors.white),
+                child: FittedBox(
+                  child: Text(
+                    "Add Data",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
               SizedBox(

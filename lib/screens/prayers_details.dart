@@ -320,7 +320,7 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
 
                 children: [
                   SizedBox(
-                    width: 25.w,
+                    width: 48.w,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
