@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -23,28 +24,28 @@ class _AddPrayersScreenState extends State<AddPrayersScreen> {
 
   // Function to show date picker
   Future<void> _selectDate(BuildContext context) async {
+
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate:selectedDateTime,
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
 
     if (picked != null && picked != prayersController.datetextController.text) {
-      prayersController.datetextController.value =
-          TextEditingValue(text: DateFormat("MMMM d, y").format(picked));
+      prayersController.datetextController.value = TextEditingValue(text: DateFormat("MMMM d, y").format(picked));
 
       selectedDateTime = picked;
+      setState(() {
+
+      });
     }
   }
 
   DateTime selectedDateTime = DateTime.now();
 
-  Future<void> _selectDateTime(
-      BuildContext context, TextEditingController controller) async {
+  Future<void> _selectDateTime(BuildContext context, TextEditingController controller) async {
     // Use the current selectedDateTime as the initial date and time
-
-    DateTime? pickedDateTime = selectedDateTime;
 
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
@@ -62,12 +63,154 @@ class _AddPrayersScreenState extends State<AddPrayersScreen> {
       );
 
       // Update the text field with the formatted date and time
-      String formattedDateTime =
-          DateFormat('MMM dd, yyyy HH:mm').format(selectedDateTime.toLocal());
+      String formattedDateTime = DateFormat('MMM dd, yyyy HH:mm').format(selectedDateTime.toLocal());
       setState(() {
         controller.text = formattedDateTime;
       });
     }
+  }
+
+  Future<void> _fetchLastEnteredData() async {
+    try {
+      // Replace 'yourFirestoreCollection' with the actual collection name in your Firestore
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+          .collection('prayerTimes')
+          .doc(widget.docId)
+          .get();
+
+      if (documentSnapshot.exists) {
+        List<dynamic> prayersData = documentSnapshot['prayers'];
+        if (prayersData.isNotEmpty) {
+          // Fetch the last entry in the prayers list
+          Map<String, dynamic> lastPrayerEntry =
+              prayersData.last as Map<String, dynamic>;
+
+          // Assuming you have a 'prayers' field in your Firestore document
+          List<dynamic> prayers = lastPrayerEntry['prayers'];
+          if (prayers.isNotEmpty) {
+
+            String date = lastPrayerEntry['date'] ?? '';
+             selectedDateTime = DateFormat('MMMM d, y').parse(date);
+             print(selectedDateTime);
+
+            // Populate text fields with the last entered data
+            prayersController.datetextController.text = lastPrayerEntry['date'] ?? '';
+            prayersController.islamicdatecontroller.text = lastPrayerEntry['islamic_date'] ?? '';
+
+            // Update the text field with the formatted date and time
+            prayersController.fajrprayerTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][0]["prayerTime"].seconds *
+                            1000));
+            prayersController.fajrjammahTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][0]["jammahTime"].seconds *
+                            1000));
+            prayersController.fajrprayerendTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][0]["prayerendTime"].seconds *
+                            1000));
+
+            prayersController.sunriseprayerTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][1]["prayerTime"].seconds *
+                            1000));
+            prayersController.sunrisejammahTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][1]["jammahTime"].seconds *
+                            1000));
+            prayersController.sunriseprayerendTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][1]["prayerendTime"].seconds *
+                            1000));
+
+            prayersController.duhrprayerTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][2]["prayerTime"].seconds *
+                            1000));
+            prayersController.duhrjammahTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][2]["jammahTime"].seconds *
+                            1000));
+            prayersController.duhrprayerendTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][2]["prayerendTime"].seconds *
+                            1000));
+
+            prayersController.asrprayerTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][3]["prayerTime"].seconds *
+                            1000));
+            prayersController.asrjammahTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][3]["jammahTime"].seconds *
+                            1000));
+            prayersController.asrprayerendTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][3]["prayerendTime"].seconds *
+                            1000));
+
+            prayersController.maghribprayerTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][4]["prayerTime"].seconds *
+                            1000));
+            prayersController.maghribjammahTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][4]["jammahTime"].seconds *
+                            1000));
+            prayersController.maghribprayerendTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][4]["prayerendTime"].seconds *
+                            1000));
+
+            prayersController.ishaprayerTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][5]["prayerTime"].seconds *
+                            1000));
+            prayersController.ishajammahTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][5]["jammahTime"].seconds *
+                            1000));
+            prayersController.ishaprayerendTimecontroller.text =
+                DateFormat('dd MMMM yyyy hh:mm a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        lastPrayerEntry['prayers'][5]["prayerendTime"].seconds *
+                            1000));
+
+            setState(() {
+              // Update the state to reflect the changes
+            });
+          }
+        }
+      }
+    } catch (error) {
+      print('Error fetching last entered data: $error');
+      // Handle error
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // TODO: implement initState
+    _fetchLastEnteredData();
   }
 
   final TextEditingController fajrnamecontroller = TextEditingController();
@@ -122,35 +265,14 @@ class _AddPrayersScreenState extends State<AddPrayersScreen> {
           child: Column(
             children: [
               ReuseTextFields(
-                  text: 'Enter Date',
-                  hintText: "February 1, 2024",
-                  prefixicon: Icons.mosque,
-                  controller: prayersController.datetextController,
-                  onTap: () {
-                    _selectDate(context);
-                  },
-                  onChanged: (value) {
-                    print("hola");
-                    prayersController.islamicdatecontroller.clear();
-                    prayersController.fajrprayerTimecontroller.clear();
-                    prayersController.fajrjammahTimecontroller.clear();
-                    prayersController.fajrprayerendTimecontroller.clear();
-                    prayersController.sunriseprayerTimecontroller.clear();
-                    prayersController.sunrisejammahTimecontroller.clear();
-                    prayersController.sunriseprayerendTimecontroller.clear();
-                    prayersController.duhrprayerTimecontroller.clear();
-                    prayersController.duhrjammahTimecontroller.clear();
-                    prayersController.duhrprayerendTimecontroller.clear();
-                    prayersController.asrprayerTimecontroller.clear();
-                    prayersController.asrjammahTimecontroller.clear();
-                    prayersController.asrprayerendTimecontroller.clear();
-                    prayersController.maghribprayerTimecontroller.clear();
-                    prayersController.maghribjammahTimecontroller.clear();
-                    prayersController.maghribprayerendTimecontroller.clear();
-                    prayersController.ishaprayerTimecontroller.clear();
-                    prayersController.ishajammahTimecontroller.clear();
-                    prayersController.ishaprayerendTimecontroller.clear();
-                  }),
+                text: 'Enter Date',
+                hintText: "February 1, 2024",
+                prefixicon: Icons.mosque,
+                controller: prayersController.datetextController,
+                onTap: () {
+                  _selectDate(context);
+                },
+              ),
               ReuseTextFields(
                 text: 'Enter Islamic Date',
                 hintText: "Rajab 20, 1445 AH",

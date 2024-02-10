@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:prayertime_dashboard/auth/register_screen.dart';
 import 'package:prayertime_dashboard/controllers/mosque_controllers.dart';
 import 'package:prayertime_dashboard/screens/mosque_info.dart';
 import 'package:prayertime_dashboard/screens/prayerstime_screen.dart';
@@ -54,6 +56,25 @@ class _HomeScreenState extends State<HomeScreen> {
               Get.to(CustomInputFields());
             }, child: Icon(Icons.mosque), tooltip: "Add Mosque",),
           appBar: AppBar(title: Text("iPray"),
+            actions: [
+              GestureDetector(
+                onTap: ()async{
+                  try{
+                    FirebaseAuth auth=FirebaseAuth.instance;
+                    await auth.signOut();
+                    Get.off(RegisterScreen());
+                  }catch(e){
+                    print(e);
+                  }
+
+
+                },
+                child: Padding(
+                  padding:  EdgeInsets.only(right: 8.0),
+                  child: Icon(Icons.login),
+                ),
+              )
+            ],
             centerTitle: true,
             flexibleSpace: Container(
               decoration: BoxDecoration(

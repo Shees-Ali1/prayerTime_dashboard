@@ -83,11 +83,9 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
                 }
               });
             },
-            child: AbsorbPointer(
-              child: TextField(
-                controller: prayerTimeController,
-                decoration:  InputDecoration(labelText: "Prayer Time",border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r))),
-              ),
+            child: TextField(
+              controller: prayerTimeController,
+              decoration:  InputDecoration(labelText: "Prayer Time",border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r))),
             ),
           ),
           SizedBox(height: 15.h,),
@@ -298,84 +296,94 @@ class _DetailPrayersTimeState extends State<DetailPrayersTime> {
           ),
         ),
         child: ListView.builder(
-            shrinkWrap: true,
             itemCount: widget.prayerstime.length,
             itemBuilder: (context, index) {
               dynamic prayertime = widget.prayerstime[index];
               bool isFriday = DateTime.now().weekday == DateTime.friday;
               return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-                child: Card(
-                    child: ListTile(
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                    children: [
-                      SizedBox(
-                        width: 25.w,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text("Name",style: TextStyle(fontWeight: FontWeight.bold),),
-                            Text(
-                              index == 2
-                                  ? (isFriday
-                                      ? (prayertime['prayerNameEnglish']
-                                          .toString()
-                                          .split(','))[0]
-                                      : (prayertime['prayerNameEnglish']
-                                          .toString()
-                                          .split(','))[1])
-                                  : prayertime['prayerNameEnglish'].toString(),
-                            ),
-                          ],
-                        ),
+                padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 10.h,),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(25),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 5.h),
+                        blurStyle: BlurStyle.outer,
+                        blurRadius: 5,
                       ),
-                      Column(
-
-                        children: [
-                          const Text("Prayer",style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text(
-                            DateFormat('hh:mm a').format(
-                              DateTime.fromMillisecondsSinceEpoch(
-                                  prayertime["prayerTime"].seconds * 1000),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          const Text("Jammah",style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text(
-                            DateFormat('hh:mm a').format(
-                              DateTime.fromMillisecondsSinceEpoch(
-                                  prayertime["jammahTime"].seconds * 1000),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          const Text("End Time",style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text(
-                            DateFormat('hh:mm a').format(
-                              DateTime.fromMillisecondsSinceEpoch(
-                                  prayertime["prayerendTime"].seconds * 1000),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      GestureDetector(
-                          onTap: () {
-                            // Show the dialog for editing prayer times
-                            showEditDialog(context, prayertime, widget.docId,
-                                index, widget.dateindex);
-                          },
-                          child: const Icon(Icons.edit)),
                     ],
                   ),
-                )),
+                                  padding: EdgeInsets.all(16),
+                                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                children: [
+                  SizedBox(
+                    width: 25.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text("Name",style: TextStyle(fontWeight: FontWeight.bold),),
+                        Text(
+                          index == 2
+                              ? (isFriday
+                                  ? (prayertime['prayerNameEnglish']
+                                      .toString()
+                                      .split(','))[0]
+                                  : (prayertime['prayerNameEnglish']
+                                      .toString()
+                                      .split(','))[1])
+                              : prayertime['prayerNameEnglish'].toString(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+
+                    children: [
+                      const Text("Prayer",style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(
+                        DateFormat('hh:mm a').format(
+                          DateTime.fromMillisecondsSinceEpoch(
+                              prayertime["prayerTime"].seconds * 1000),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      const Text("Jammah",style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(
+                        DateFormat('hh:mm a').format(
+                          DateTime.fromMillisecondsSinceEpoch(
+                              prayertime["jammahTime"].seconds * 1000),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      const Text("End Time",style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(
+                        DateFormat('hh:mm a').format(
+                          DateTime.fromMillisecondsSinceEpoch(
+                              prayertime["prayerendTime"].seconds * 1000),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  GestureDetector(
+                      onTap: () {
+                        // Show the dialog for editing prayer times
+                        showEditDialog(context, prayertime, widget.docId,
+                            index, widget.dateindex);
+                      },
+                      child: const Icon(Icons.edit)),
+                ],
+                                  ),
+                                ),
               );
             }),
       ),

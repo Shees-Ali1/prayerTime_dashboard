@@ -6,6 +6,7 @@ import 'package:prayertime_dashboard/controllers/mosque_controllers.dart';
 import 'package:prayertime_dashboard/screens/home_screen.dart';
 
 class PrayersController extends GetxController {
+  Rx<DateTime> selectedDate=DateTime.now().obs;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
    List<Map<String, dynamic>> prayers = [];
 

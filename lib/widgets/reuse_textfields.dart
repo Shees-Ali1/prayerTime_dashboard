@@ -9,7 +9,8 @@ class ReuseTextFields extends StatelessWidget {
   final VoidCallback? onTap;
   final bool readonly = false;
   final void Function(String)? onChanged;
-  const ReuseTextFields({super.key, required this.text, required this.hintText, required this.prefixicon, required this.controller, this.onTap, this.onChanged});
+  final String? Function(String?)? validator;
+  const ReuseTextFields({super.key, required this.text, required this.hintText, required this.prefixicon, required this.controller, this.onTap, this.onChanged, this.validator});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class ReuseTextFields extends StatelessWidget {
             SizedBox(height: 10.h,),
             Text(text,style: TextStyle(fontWeight: FontWeight.bold)),
             TextFormField(
+              validator: validator,
 
               onTap: (){
                 if(onTap != null){
