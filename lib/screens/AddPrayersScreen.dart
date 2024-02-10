@@ -22,7 +22,63 @@ class AddPrayersScreen extends StatefulWidget {
 class _AddPrayersScreenState extends State<AddPrayersScreen> {
   final PrayersController prayersController = Get.put(PrayersController());
 
-  // Function to show date picker
+  DateTime selectedDateTime = DateTime.now();
+
+  DateTime parseDateString(String dateString) {
+    List<String> parts = dateString.split(' ');
+
+    int day = int.parse(parts[0]);
+    int month = parseMonth(parts[1]);
+    int year = int.parse(parts[2]);
+    int hour = int.parse(parts[3].split(':')[0]);
+    int minute = int.parse(parts[3].split(':')[1]);
+    String period = parts[4];
+
+    // Handle leap year
+    if (!DateTime.utc(year, 2, 29).isAfter(DateTime.utc(year, 2, 28))) {
+      // Not a leap year, change day to 28
+      day = 28;
+    }
+
+    if (period.toUpperCase() == 'PM' && hour < 12) {
+      // Convert to 24-hour format if it's PM and hour is less than 12
+      hour += 12;
+    }
+
+    return DateTime(year, month, day, hour, minute);
+  }
+
+  int parseMonth(String monthString) {
+    switch (monthString) {
+      case 'January':
+        return 1;
+      case 'February':
+        return 2;
+      case 'March':
+        return 3;
+      case 'April':
+        return 4;
+      case 'May':
+        return 5;
+      case 'June':
+        return 6;
+      case 'July':
+        return 7;
+      case 'August':
+        return 8;
+      case 'September':
+        return 9;
+      case 'October':
+        return 10;
+      case 'November':
+        return 11;
+      case 'December':
+        return 12;
+      default:
+        throw ArgumentError('Invalid month string: $monthString');
+    }
+  }
+
   Future<void> _selectDate(BuildContext context) async {
 
     final DateTime? picked = await showDatePicker(
@@ -36,22 +92,87 @@ class _AddPrayersScreenState extends State<AddPrayersScreen> {
       prayersController.datetextController.value = TextEditingValue(text: DateFormat("MMMM d, y").format(picked));
 
       selectedDateTime = picked;
+
+      DateTime fajrPrayerTime = parseAndCopyDate(prayersController.fajrprayerTimecontroller.text);
+      print(fajrPrayerTime);
+      DateTime fajrJammahTime = parseAndCopyDate(prayersController.fajrjammahTimecontroller.text);
+      DateTime fajrPrayerEndTime = parseAndCopyDate(prayersController.fajrprayerendTimecontroller.text);
+
+      DateTime sunrisePrayerTime = parseAndCopyDate(prayersController.sunriseprayerTimecontroller.text);
+      DateTime sunriseJammahTime = parseAndCopyDate(prayersController.sunrisejammahTimecontroller.text);
+      DateTime sunrisePrayerEndTime = parseAndCopyDate(prayersController.sunriseprayerendTimecontroller.text);
+
+      DateTime duhrPrayerTime = parseAndCopyDate(prayersController.duhrprayerTimecontroller.text);
+      DateTime duhrJammahTime = parseAndCopyDate(prayersController.duhrjammahTimecontroller.text);
+      DateTime duhrPrayerEndTime = parseAndCopyDate(prayersController.duhrprayerendTimecontroller.text);
+
+      DateTime asrPrayerTime = parseAndCopyDate(prayersController.asrprayerTimecontroller.text);
+      DateTime asrJammahTime = parseAndCopyDate(prayersController.asrjammahTimecontroller.text);
+      DateTime asrPrayerEndTime = parseAndCopyDate(prayersController.asrprayerendTimecontroller.text);
+
+      DateTime maghribPrayerTime = parseAndCopyDate(prayersController.maghribprayerTimecontroller.text);
+      DateTime maghribJammahTime = parseAndCopyDate(prayersController.maghribjammahTimecontroller.text);
+      DateTime maghribPrayerEndTime = parseAndCopyDate(prayersController.maghribprayerendTimecontroller.text);
+
+      DateTime ishaPrayerTime = parseAndCopyDate(prayersController.ishaprayerTimecontroller.text);
+      DateTime ishaJammahTime = parseAndCopyDate(prayersController.ishajammahTimecontroller.text);
+      DateTime ishaPrayerEndTime = parseAndCopyDate(prayersController.ishaprayerendTimecontroller.text);
+
+
+
       setState(() {
 
+        prayersController.fajrprayerTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(fajrPrayerTime);
+        print(   prayersController.fajrprayerTimecontroller.text);
+        prayersController.fajrjammahTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(fajrJammahTime);
+        prayersController.fajrprayerendTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(fajrPrayerEndTime);
+
+        prayersController.sunriseprayerTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(sunrisePrayerTime);
+        prayersController.sunrisejammahTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(sunriseJammahTime);
+        prayersController.sunriseprayerendTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(sunrisePrayerEndTime);
+
+        prayersController.duhrprayerTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(duhrPrayerTime);
+        prayersController.duhrjammahTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(duhrJammahTime);
+        prayersController.duhrprayerendTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(duhrPrayerEndTime);
+
+        prayersController.asrprayerTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(asrPrayerTime);
+        prayersController.asrjammahTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(asrJammahTime);
+        prayersController.asrprayerendTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(asrPrayerEndTime);
+
+        prayersController.maghribprayerTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(maghribPrayerTime);
+        prayersController.maghribjammahTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(maghribJammahTime);
+        prayersController.maghribprayerendTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(maghribPrayerEndTime);
+
+        prayersController.ishaprayerTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(ishaPrayerTime);
+        prayersController.ishajammahTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(ishaJammahTime);
+        prayersController.ishaprayerendTimecontroller.text = DateFormat('dd MMMM yyyy hh:mm a').format(ishaPrayerEndTime);
       });
     }
   }
 
-  DateTime selectedDateTime = DateTime.now();
+  DateTime parseAndCopyDate(String timeText) {
+    DateTime parsedTime = parseDateString(timeText);
+    return parsedTime.copyWith(
+      year: selectedDateTime.year,
+      month: selectedDateTime.month,
+      day: selectedDateTime.day,
+    );
+  }
 
   Future<void> _selectDateTime(BuildContext context, TextEditingController controller) async {
     // Use the current selectedDateTime as the initial date and time
+    TimeOfDay timeOfDay = TimeOfDay.now();
+    try{
+      timeOfDay = TimeOfDay.fromDateTime(parseDateString(controller.text));
+    }catch(e){
+      timeOfDay = TimeOfDay.now();
+    }
 
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.fromDateTime(selectedDateTime),
+      initialTime: timeOfDay,
     );
-
+    print(pickedTime);
     if (pickedTime != null) {
       // Update only the time part of the selectedDateTime
       selectedDateTime = DateTime(
@@ -62,8 +183,10 @@ class _AddPrayersScreenState extends State<AddPrayersScreen> {
         pickedTime.minute,
       );
 
+
       // Update the text field with the formatted date and time
-      String formattedDateTime = DateFormat('MMM dd, yyyy HH:mm').format(selectedDateTime.toLocal());
+      String formattedDateTime = DateFormat('MMM dd, yyyy HH:mm').format(selectedDateTime);
+      print(formattedDateTime);
       setState(() {
         controller.text = formattedDateTime;
       });

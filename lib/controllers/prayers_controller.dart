@@ -85,78 +85,80 @@ class PrayersController extends GetxController {
               'prayerNameEnglish': "Fajr",
               'prayerNameArabic': "الفجر",
               'prayerTime': _parseDateTime(
-                  fajrprayerTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  fajrprayerTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
               'jammahTime': _parseDateTime(
-                  fajrjammahTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  fajrjammahTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
               'prayerendTime': _parseDateTime(
-                  fajrprayerendTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  fajrprayerendTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
             },
             {
              'daytime': 'assets/icons/sunrise.png',
               'prayerNameEnglish': "Sunrise",
               'prayerNameArabic': "الشروق",
               'prayerTime': _parseDateTime(
-                  sunriseprayerTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  sunriseprayerTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
               'jammahTime': _parseDateTime(
-                  sunriseprayerTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  sunriseprayerTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
               'prayerendTime': _parseDateTime(
-                  sunriseprayerendTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  sunriseprayerendTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
             },
             {
               'daytime': 'assets/icons/zuhr.png',
               'prayerNameEnglish': "Khutbah,Dhuhr",
               'prayerNameArabic': "الظهر,خطبة",
               'prayerTime': _parseDateTime(
-                  duhrprayerTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  duhrprayerTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
               'jammahTime': _parseDateTime(
-                  duhrjammahTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  duhrjammahTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
               'prayerendTime': _parseDateTime(
-                  duhrprayerendTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  duhrprayerendTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
             },
             {
               'daytime': 'assets/icons/asr.png',
               'prayerNameEnglish': "Asr",
               'prayerNameArabic': "العصر",
               'prayerTime': _parseDateTime(
-                  asrprayerTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  asrprayerTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
               'jammahTime': _parseDateTime(
-                  asrjammahTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  asrjammahTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
               'prayerendTime': _parseDateTime(
-                  asrprayerendTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  asrprayerendTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
             },
             {
               'daytime': 'assets/icons/maghrib.png',
               'prayerNameEnglish': "Mahrib",
               'prayerNameArabic': "المغرب",
               'prayerTime': _parseDateTime(
-                  maghribprayerTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  maghribprayerTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
               'jammahTime': _parseDateTime(
-                  maghribjammahTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  maghribjammahTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
               'prayerendTime': _parseDateTime(
-                  maghribprayerendTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  maghribprayerendTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
             },
             {
               'daytime': 'assets/icons/isha.png',
               'prayerNameEnglish': "Isha",
               'prayerNameArabic': "العشاء",
               'prayerTime': _parseDateTime(
-                  ishaprayerTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  ishaprayerTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
               'jammahTime': _parseDateTime(
-                  ishajammahTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  ishajammahTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
               'prayerendTime': _parseDateTime(
-                  ishaprayerendTimecontroller.text, 'MMM dd, yyyy HH:mm'),
+                  ishaprayerendTimecontroller.text, 'dd MMMM yyyy hh:mm a'),
             },
           ],
         };
         prayers.add(prayer);
 
         FirebaseFirestore firestore = FirebaseFirestore.instance;
+        // Instead of set, use update
         await firestore.collection('prayerTimes').doc(mosqueDocId).update({
-          'prayers': prayers,
+          'prayers': FieldValue.arrayUnion([prayer]),
         });
+
         mosqueController.fetchMosques();
         update();
-        datetextController.clear();
+            datetextController.clear();
             islamicdatecontroller.clear();
             fajrprayerTimecontroller.clear();
             fajrjammahTimecontroller.clear();
