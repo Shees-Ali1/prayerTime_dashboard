@@ -158,13 +158,46 @@ class _AddPrayersScreenState extends State<AddPrayersScreen> {
       day: selectedDateTime.day,
     );
   }
+  // Future<void> _selectDateTime(BuildContext context, TextEditingController controller) async {
+  //   // Use the current selectedDateTime as the initial date and time
+  //   TimeOfDay timeOfDay = TimeOfDay.now();
+  //   try{
+  //     timeOfDay = TimeOfDay.fromDateTime(parseDateString(controller.text));
+  //   }catch(e){
+  //     timeOfDay = TimeOfDay.now();
+  //   }
+  //
+  //   TimeOfDay? pickedTime = await showTimePicker(
+  //     context: context,
+  //     initialTime: timeOfDay,
+  //   );
+  //   print(pickedTime);
+  //   if (pickedTime != null) {
+  //     // Update only the time part of the selectedDateTime
+  //     selectedDateTime = DateTime(
+  //       selectedDateTime.year,
+  //       selectedDateTime.month,
+  //       selectedDateTime.day,
+  //       pickedTime.hour,
+  //       pickedTime.minute,
+  //     );
+  //
+  //
+  //     // Update the text field with the formatted date and time
+  //     String formattedDateTime = DateFormat('MMM dd, yyyy HH:mm').format(selectedDateTime);
+  //     print(formattedDateTime);
+  //     setState(() {
+  //       controller.text = formattedDateTime;
+  //     });
+  //   }
+  // }
 
   Future<void> _selectDateTime(BuildContext context, TextEditingController controller) async {
     // Use the current selectedDateTime as the initial date and time
     TimeOfDay timeOfDay = TimeOfDay.now();
-    try{
+    try {
       timeOfDay = TimeOfDay.fromDateTime(parseDateString(controller.text));
-    }catch(e){
+    } catch (e) {
       timeOfDay = TimeOfDay.now();
     }
 
@@ -172,9 +205,285 @@ class _AddPrayersScreenState extends State<AddPrayersScreen> {
       context: context,
       initialTime: timeOfDay,
     );
-    print(pickedTime);
+
     if (pickedTime != null) {
-      // Update only the time part of the selectedDateTime
+      // Check if fajrprayerTimecontroller is being used
+
+
+        if (controller == prayersController.fajrprayerTimecontroller || controller == prayersController.fajrjammahTimecontroller || controller==prayersController.fajrprayerendTimecontroller) {
+          // Check if the selected time is in AM
+          if (pickedTime.period != DayPeriod.am) {
+            Get.snackbar('Error', 'Kindly select time in the AM');
+            return;
+          }
+        }
+
+      // Check if fajrjammahTimecontroller is being used
+      if (controller == prayersController.fajrjammahTimecontroller) {
+        // Check if the selected time is greater than fajrprayerTimecontroller
+        TimeOfDay fajrPrayerTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.fajrprayerTimecontroller.text));
+
+        if (
+            (pickedTime.hour == fajrPrayerTimeOfDay.hour && pickedTime.minute <= fajrPrayerTimeOfDay.minute)) {
+          Get.snackbar('Error', "Jammah time must be greater than Fajr prayer time");
+          return;
+        }
+      }
+        if (controller == prayersController.fajrprayerendTimecontroller) {
+          // Check if the selected time is in PM
+          if (pickedTime.period != DayPeriod.am) {
+            Get.snackbar('Error', 'Kindly select time in the am');
+            return;
+          }
+
+          // Check if the selected time is greater than sunriseendTimecontroller
+          TimeOfDay sunriseEndTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.fajrjammahTimecontroller.text));
+
+          if (
+              (pickedTime.hour == sunriseEndTimeOfDay.hour && pickedTime.minute <= sunriseEndTimeOfDay.minute)) {
+            Get.snackbar('Error', 'Fajr End Time must be greater than Fajr Jammah Time');
+            return;
+          }
+        }
+        if (controller == prayersController.sunriseprayerTimecontroller) {
+          // Check if the selected time is in AM
+          if (pickedTime.period != DayPeriod.am) {
+            Get.snackbar('Error', 'Kindly select time in the AM');
+            return;
+          }
+
+          // Check if the selected time is greater than fajrprayerendTimecontroller
+          TimeOfDay fajrPrayerEndTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.fajrprayerendTimecontroller.text));
+
+          if (pickedTime.hour <= fajrPrayerEndTimeOfDay.hour ||
+              (pickedTime.hour == fajrPrayerEndTimeOfDay.hour && pickedTime.minute <= fajrPrayerEndTimeOfDay.minute)) {
+            Get.snackbar('Error', 'Sunrise time must be greater than Fajr Prayer End Time');
+            return;
+          }
+        }
+        if (controller == prayersController.sunriseprayerendTimecontroller) {
+          // Check if the selected time is in PM
+          if (pickedTime.period != DayPeriod.am) {
+            Get.snackbar('Error', 'Kindly select time in the am');
+            return;
+          }
+
+
+          // Check if the selected time is greater than sunriseprayerTimecontroller
+          TimeOfDay sunrisePrayerTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.sunriseprayerTimecontroller.text));
+
+          if (
+              (pickedTime.hour == sunrisePrayerTimeOfDay.hour && pickedTime.minute <= sunrisePrayerTimeOfDay.minute)) {
+            Get.snackbar('Error', 'Sunrise End time must be greater than Sunrise Prayer Time');
+            return;
+          }
+        }
+        if (controller == prayersController.duhrprayerTimecontroller) {
+          // Check if the selected time is in PM
+          if (pickedTime.period != DayPeriod.pm) {
+            Get.snackbar('Error', 'Kindly select time in the PM');
+            return;
+          }
+
+          // Check if the selected time is greater than sunriseendTimecontroller
+          TimeOfDay sunriseEndTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.sunriseprayerendTimecontroller.text));
+
+          if (pickedTime.hour <= sunriseEndTimeOfDay.hour && pickedTime.minute <= sunriseEndTimeOfDay.minute) {
+            Get.snackbar('Error', 'Duhr Prayer Time must be greater than Sunrise End Time');
+            return;
+          }
+        }
+        if (controller == prayersController.duhrjammahTimecontroller) {
+          // Check if the selected time is in PM
+          if (pickedTime.period != DayPeriod.pm) {
+            Get.snackbar('Error', 'Kindly select time in the PM');
+            return;
+          }
+
+          // Check if the selected time is greater than duhrprayerTimecontroller
+          TimeOfDay duhrPrayerTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.duhrprayerTimecontroller.text));
+
+          if (
+              (pickedTime.hour == duhrPrayerTimeOfDay.hour && pickedTime.minute <= duhrPrayerTimeOfDay.minute)) {
+            Get.snackbar('Error', 'Duhr Jammah Time must be greater than Duhr Prayer Time');
+            return;
+          }
+        }
+        if (controller == prayersController.duhrprayerendTimecontroller) {
+          // Check if the selected time is in PM
+          if (pickedTime.period != DayPeriod.pm) {
+            Get.snackbar('Error', 'Kindly select time in the PM');
+            return;
+          }
+
+          // Check if the selected time is greater than duhrjammahTimecontroller
+          TimeOfDay duhrJammahTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.duhrjammahTimecontroller.text));
+
+          if (
+              (pickedTime.hour == duhrJammahTimeOfDay.hour && pickedTime.minute <= duhrJammahTimeOfDay.minute)) {
+            Get.snackbar('Error', 'Duhr Prayer End Time must be greater than Duhr Jammah Time');
+            return;
+          }
+        }
+        if (controller == prayersController.asrprayerTimecontroller) {
+          // Check if the selected time is in PM
+          if (pickedTime.period != DayPeriod.pm) {
+            Get.snackbar('Error', 'Kindly select time in the PM');
+            return;
+          }
+
+          // Check if the selected time is greater than duhrprayerendTimecontroller
+          TimeOfDay duhrPrayerEndTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.duhrprayerendTimecontroller.text));
+
+          if (
+              (pickedTime.hour == duhrPrayerEndTimeOfDay.hour && pickedTime.minute <= duhrPrayerEndTimeOfDay.minute)) {
+            Get.snackbar('Error', 'Asr Prayer Time must be greater than Duhr Prayer End Time');
+            return;
+          }
+        }
+        if (controller == prayersController.asrjammahTimecontroller) {
+          // Check if the selected time is in PM
+          if (pickedTime.period != DayPeriod.pm) {
+            Get.snackbar('Error', 'Kindly select time in the PM');
+            return;
+          }
+
+          // Check if the selected time is greater than asrprayerTimecontroller
+          TimeOfDay asrPrayerTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.asrprayerTimecontroller.text));
+
+          if (
+              (pickedTime.hour == asrPrayerTimeOfDay.hour && pickedTime.minute <= asrPrayerTimeOfDay.minute)) {
+            Get.snackbar('Error', 'Asr Jammah Time must be greater than Asr Prayer Time');
+            return;
+          }
+        }
+        if (controller == prayersController.asrprayerendTimecontroller) {
+          // Check if the selected time is in PM
+          if (pickedTime.period != DayPeriod.pm) {
+            Get.snackbar('Error', 'Kindly select time in the PM');
+            return;
+          }
+
+          // Check if the selected time is greater than asrjammahTimecontroller
+          TimeOfDay asrJammahTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.asrjammahTimecontroller.text));
+
+          if (
+              (pickedTime.hour == asrJammahTimeOfDay.hour && pickedTime.minute <= asrJammahTimeOfDay.minute)) {
+            Get.snackbar('Error', 'Asr Prayer Time must be greater than Asr Jammah Time');
+            return;
+          }
+        }
+        if (controller == prayersController.maghribprayerTimecontroller) {
+          // Check if the selected time is in PM
+          if (pickedTime.period != DayPeriod.pm) {
+            Get.snackbar('Error', 'Kindly select time in the PM');
+            return;
+          }
+
+          // Check if the selected time is greater than asrprayerendTimecontroller
+          TimeOfDay asrPrayerEndTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.asrprayerendTimecontroller.text));
+
+          if (
+              (pickedTime.hour == asrPrayerEndTimeOfDay.hour && pickedTime.minute <= asrPrayerEndTimeOfDay.minute)) {
+            Get.snackbar('Error', 'Maghrib Prayer Time must be greater than Asr Prayer End Time');
+            return;
+          }
+        }
+        if (controller == prayersController.maghribjammahTimecontroller) {
+          // Check if the selected time is in PM
+          if (pickedTime.period != DayPeriod.pm) {
+            Get.snackbar('Error', 'Kindly select time in the PM');
+            return;
+          }
+
+          // Check if the selected time is greater than maghribprayerTimecontroller
+          TimeOfDay maghribPrayerTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.maghribprayerTimecontroller.text));
+
+          if (
+              (pickedTime.hour == maghribPrayerTimeOfDay.hour && pickedTime.minute <= maghribPrayerTimeOfDay.minute)) {
+            Get.snackbar('Error', 'Maghrib Jammah Time must be greater than Maghrib Prayer Time');
+            return;
+          }
+        }
+        if (controller == prayersController.maghribprayerendTimecontroller) {
+          // Check if the selected time is in PM
+          if (pickedTime.period != DayPeriod.pm) {
+            Get.snackbar('Error', 'Kindly select time in the PM');
+            return;
+          }
+
+          // Check if the selected time is greater than maghribprayerTimecontroller
+          TimeOfDay maghribPrayerTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.maghribjammahTimecontroller.text));
+
+          if (
+              (pickedTime.hour == maghribPrayerTimeOfDay.hour && pickedTime.minute <= maghribPrayerTimeOfDay.minute)) {
+            Get.snackbar('Error', 'Maghrib Jammah Time must be greater than Maghrib Prayer Time');
+            return;
+          }
+        }
+        if (controller == prayersController.ishaprayerTimecontroller) {
+          // Check if the selected time is in PM
+          if (pickedTime.period != DayPeriod.pm) {
+            Get.snackbar('Error', 'Kindly select time in the PM');
+            return;
+          }
+
+          // Check if the selected time is greater than maghribprayerendTimecontroller
+          TimeOfDay maghribPrayerEndTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.maghribprayerendTimecontroller.text));
+
+          if (
+              (pickedTime.hour == maghribPrayerEndTimeOfDay.hour && pickedTime.minute <= maghribPrayerEndTimeOfDay.minute)) {
+            Get.snackbar('Error', 'Isha Prayer Time must be greater than Maghrib Prayer End Time');
+            return;
+          }
+        }
+        if (controller == prayersController.ishajammahTimecontroller) {
+          // Check if the selected time is in PM
+          if (pickedTime.period != DayPeriod.pm) {
+            Get.snackbar('Error', 'Kindly select time in the PM');
+            return;
+          }
+
+          // Check if the selected time is greater than ishaprayerTimecontroller
+          TimeOfDay ishaPrayerTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.ishaprayerTimecontroller.text));
+
+          if (
+              (pickedTime.hour == ishaPrayerTimeOfDay.hour && pickedTime.minute <= ishaPrayerTimeOfDay.minute)) {
+            Get.snackbar('Error', 'Isha Jammah Time must be greater than Isha Prayer Time');
+            return;
+          }
+        }
+        if (controller == prayersController.ishaprayerendTimecontroller) {
+          // Check if the selected time is in PM
+          if (pickedTime.period != DayPeriod.pm) {
+            Get.snackbar('Error', 'Kindly select time in the PM');
+            return;
+          }
+
+          // Check if the selected time is greater than ishajammahTimecontroller
+          TimeOfDay ishaJammahTimeOfDay = TimeOfDay.fromDateTime(parseDateString(prayersController.ishajammahTimecontroller.text));
+
+          if (
+              (pickedTime.hour == ishaJammahTimeOfDay.hour && pickedTime.minute <= ishaJammahTimeOfDay.minute)) {
+            Get.snackbar('Error', 'Isha Prayer End Time must be greater than Isha Jammah Time');
+            return;
+          }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Update only the time part of the selectedDateTime
       selectedDateTime = DateTime(
         selectedDateTime.year,
         selectedDateTime.month,
@@ -183,15 +492,14 @@ class _AddPrayersScreenState extends State<AddPrayersScreen> {
         pickedTime.minute,
       );
 
-
       // Update the text field with the formatted date and time
-      String formattedDateTime = DateFormat('MMM dd, yyyy HH:mm').format(selectedDateTime);
+      String formattedDateTime = DateFormat('dd MMMM yyyy hh:mm a').format(selectedDateTime);
       print(formattedDateTime);
       setState(() {
         controller.text = formattedDateTime;
       });
-    }
-  }
+
+  }}
 
   Future<void> _fetchLastEnteredData() async {
     try {
@@ -437,6 +745,7 @@ class _AddPrayersScreenState extends State<AddPrayersScreen> {
                               _selectDateTime(context,
                                   prayersController.fajrprayerTimecontroller);
                             },
+
                           ),
                           SizedBox(
                             width: 20.w,

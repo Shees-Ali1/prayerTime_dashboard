@@ -9,9 +9,9 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController=TextEditingController();
-    TextEditingController passwordController=TextEditingController();
-    final RegisterController registerController=Get.put(RegisterController());
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+    final RegisterController registerController = Get.put(RegisterController());
     final GlobalKey<FormState> _key = GlobalKey<FormState>();
     String? validateEmail(String? formEmail) {
       if (formEmail == null || formEmail.isEmpty)
@@ -45,13 +45,15 @@ class RegisterScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Center(child: Text('Welcome To iPray',style: TextStyle(fontSize: 30),)),
-            Center(child: Text('Login to Continue',style: TextStyle(fontSize: 18),)),
+            Center(child: Text(
+              'Welcome To iPray', style: TextStyle(fontSize: 30),)),
+            Center(child: Text(
+              'Login to Continue', style: TextStyle(fontSize: 18),)),
 
             SizedBox(height: 20.h,),
 
             ReuseTextFields(
-              validator: validateEmail,
+                validator: validateEmail,
                 text: "Enter Email",
                 hintText: "abc@gmail.com",
                 prefixicon: Icons.email,
@@ -59,47 +61,54 @@ class RegisterScreen extends StatelessWidget {
             SizedBox(height: 10.h,),
 
             ReuseTextFields(
-              validator: validatePassword,
+                validator: validatePassword,
                 text: "Enter Password",
                 hintText: "1341523",
                 prefixicon: Icons.password,
                 controller: passwordController),
 
             SizedBox(height: 20.h,),
+            //         Center(
+            //           child: ElevatedButton(
+            //
+            //             style: ElevatedButton.styleFrom(
+            //                 fixedSize: Size(100.w, 50.h),
+            //                 backgroundColor: Colors.black54
+            //
+            //             ),
+            //             onPressed: () {
+            // if (_key.currentState!.validate()) {
+            //   registerController.register(emailController, passwordController);
+            // }
+            //             },
+            //             child: Text("Register",style: TextStyle(color: Colors.white),),
+            //           ),
+            //         ),
+            //         SizedBox(height: 10.h,),
+
             Center(
-              child: ElevatedButton(
+              child: Obx(() {
+                return ElevatedButton(
 
-                style: ElevatedButton.styleFrom(
-                    fixedSize: Size(100.w, 50.h),
-                    backgroundColor: Colors.black54
+                  style: ElevatedButton.styleFrom(
+                      fixedSize: Size(100.w, 50.h),
+                      backgroundColor: Colors.black54
 
-                ),
-                onPressed: () {
-    if (_key.currentState!.validate()) {
-      registerController.register(emailController, passwordController);
-    }
-                },
-                child: Text("Register",style: TextStyle(color: Colors.white),),
-              ),
-            ),
-            SizedBox(height: 10.h,),
-
-            Center(
-              child: ElevatedButton(
-
-                style: ElevatedButton.styleFrom(
-                    fixedSize: Size(100.w, 50.h),
-                    backgroundColor: Colors.black54
-
-                ),
-                onPressed: () {
-                  if (_key.currentState!.validate()) {
-                    registerController.signin(emailController, passwordController);
-                  }
-
-                },
-                child: Text("Login",style: TextStyle(color: Colors.white),),
-              ),
+                  ),
+                  onPressed: () {
+                    if (_key.currentState!.validate()) {
+                      registerController.signin(
+                          emailController, passwordController);
+                    }
+                  },
+                  child: registerController.isLoading.value
+                      ? CircularProgressIndicator(
+                    valueColor:
+                    AlwaysStoppedAnimation<Color>(Colors.white),
+                  )
+                      : Text("Login", style: TextStyle(color: Colors.white),),
+                );
+              }),
             ),
           ],
         ),

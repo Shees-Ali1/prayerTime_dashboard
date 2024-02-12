@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   try{
                     FirebaseAuth auth=FirebaseAuth.instance;
                     await auth.signOut();
+                    Get.snackbar('Success', "You have been log out");
                     Get.off(RegisterScreen());
                   }catch(e){
                     print(e);

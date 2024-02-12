@@ -7,10 +7,16 @@ class ReuseTextFields extends StatelessWidget {
   final IconData prefixicon;
   final TextEditingController controller;
   final VoidCallback? onTap;
-  final bool readonly = false;
+  final bool readonly;
   final void Function(String)? onChanged;
+  final void Function(String)? onFieldSubmitted;
   final String? Function(String?)? validator;
-  const ReuseTextFields({super.key, required this.text, required this.hintText, required this.prefixicon, required this.controller, this.onTap, this.onChanged, this.validator});
+  final void Function()? onEditingComplete;
+  final void Function(PointerDownEvent)? onTapOutside;
+  final  void Function(String?)? onSaved;
+
+
+  const ReuseTextFields({super.key,this.readonly=false , required this.text, required this.hintText, required this.prefixicon, required this.controller, this.onTap, this.onChanged, this.validator, this.onFieldSubmitted, this.onEditingComplete, this.onTapOutside, this.onSaved});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +28,12 @@ class ReuseTextFields extends StatelessWidget {
             SizedBox(height: 10.h,),
             Text(text,style: TextStyle(fontWeight: FontWeight.bold)),
             TextFormField(
+
+              onSaved: onSaved,
+              readOnly: readonly,
+              onTapOutside: onTapOutside,
+              onEditingComplete: onEditingComplete,
+              onFieldSubmitted:onFieldSubmitted ,
               validator: validator,
 
               onTap: (){
@@ -31,7 +43,6 @@ class ReuseTextFields extends StatelessWidget {
                 },
               controller: controller,
               onChanged: (value){
-                print("change call");
                 if(onChanged != null){
                   onChanged!(value);
                 }
