@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:prayertime_dashboard/auth/register_screen.dart';
 import 'package:prayertime_dashboard/auth/splash.dart';
 import 'package:prayertime_dashboard/screens/home_screen.dart';
 
@@ -37,7 +38,7 @@ class _MyAppState extends State<MyApp> {
       builder: (_,child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-           home: SplashScreen(),
+           home: HomeScreen(),
         );
       }
     );

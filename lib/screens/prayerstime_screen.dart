@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -116,7 +117,9 @@ class _PrayersTimeScreenState extends State<PrayersTimeScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 16.0.w),
                         child: GestureDetector(
                           onTap: () {
-                            Get.to(DetailPrayersTime(prayerstime: prayertime, mosque: widget.mosque, docId: widget.docId, dateindex: index,date:prayer['date']));
+                            prayersController.prayertime.value=prayertime;
+                            print(prayersController.prayertime);
+                            Get.to(DetailPrayersTime( mosque: widget.mosque, docId: widget.docId, dateindex: index,date:prayer['date']));
                           },
                           child: Card(
                             child: ListTile(

@@ -250,4 +250,6 @@ class PrayersController extends GetxController {
   }
 
 
+  RxList prayertime=[].obs;
+
 }
