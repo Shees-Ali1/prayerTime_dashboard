@@ -23,6 +23,7 @@ class RegisterScreen extends StatelessWidget {
 
       return null;
     }
+
     String? validatePassword(String? formPassword) {
       if (formPassword == null || formPassword.isEmpty)
         return 'Password is required.';
@@ -38,80 +39,89 @@ class RegisterScreen extends StatelessWidget {
 
       return null;
     }
+
     return Scaffold(
-      body: Form(
-        key: _key,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Center(child: Text(
-              'Welcome To iPray', style: TextStyle(fontSize: 30),)),
-            Center(child: Text(
-              'Login to Continue', style: TextStyle(fontSize: 18),)),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Center(
+              child: Text(
+            'Welcome To iPray',
+            style: TextStyle(fontSize: 30),
+          )),
+          Center(
+              child: Text(
+            'Login to Continue',
+            style: TextStyle(fontSize: 18),
+          )),
 
-            SizedBox(height: 20.h,),
+          SizedBox(
+            height: 20.h,
+          ),
 
-            ReuseTextFields(
-                validator: validateEmail,
-                text: "Enter Email",
-                hintText: "abc@gmail.com",
-                prefixicon: Icons.email,
-                controller: emailController),
-            SizedBox(height: 10.h,),
+          ReuseTextFields(
+              validator: validateEmail,
+              text: "Enter Email",
+              hintText: "abc@gmail.com",
+              prefixicon: Icons.email,
+              controller: emailController),
+          SizedBox(
+            height: 10.h,
+          ),
 
-            ReuseTextFields(
-                validator: validatePassword,
-                text: "Enter Password",
-                hintText: "1341523",
-                prefixicon: Icons.password,
-                controller: passwordController),
+          ReuseTextFields(
+              validator: validatePassword,
+              text: "Enter Password",
+              hintText: "1341523",
+              prefixicon: Icons.password,
+              controller: passwordController),
 
-            SizedBox(height: 20.h,),
-            //         Center(
-            //           child: ElevatedButton(
-            //
-            //             style: ElevatedButton.styleFrom(
-            //                 fixedSize: Size(100.w, 50.h),
-            //                 backgroundColor: Colors.black54
-            //
-            //             ),
-            //             onPressed: () {
-            // if (_key.currentState!.validate()) {
-            //   registerController.register(emailController, passwordController);
-            // }
-            //             },
-            //             child: Text("Register",style: TextStyle(color: Colors.white),),
-            //           ),
-            //         ),
-            //         SizedBox(height: 10.h,),
+          SizedBox(
+            height: 20.h,
+          ),
+          //         Center(
+          //           child: ElevatedButton(
+          //
+          //             style: ElevatedButton.styleFrom(
+          //                 fixedSize: Size(100.w, 50.h),
+          //                 backgroundColor: Colors.black54
+          //
+          //             ),
+          //             onPressed: () {
+          // if (_key.currentState!.validate()) {
+          //   registerController.register(emailController, passwordController);
+          // }
+          //             },
+          //             child: Text("Register",style: TextStyle(color: Colors.white),),
+          //           ),
+          //         ),
+          //         SizedBox(height: 10.h,),
 
-            Center(
-              child: Obx(() {
-                return ElevatedButton(
-
-                  style: ElevatedButton.styleFrom(
-                      fixedSize: Size(100.w, 50.h),
-                      backgroundColor: Colors.black54
-
-                  ),
-                  onPressed: () {
-                    if (_key.currentState!.validate()) {
-                      registerController.signin(
-                          emailController, passwordController);
-                    }
-                  },
-                  child: registerController.isLoading.value
-                      ? CircularProgressIndicator(
-                    valueColor:
-                    AlwaysStoppedAnimation<Color>(Colors.white),
-                  )
-                      : Text("Login", style: TextStyle(color: Colors.white),),
-                );
-              }),
-            ),
-          ],
-        ),
+          Center(
+            child: Obx(() {
+              return ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    fixedSize: Size(100.w, 50.h),
+                    backgroundColor: Colors.black54),
+                onPressed: () {
+                  //   if (_key.currentState!.validate()) {
+                  registerController.signin(
+                      emailController, passwordController);
+                  //  }
+                },
+                child: registerController.isLoading.value
+                    ? CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      )
+                    : Text(
+                        "Login",
+                        style: TextStyle(color: Colors.white),
+                      ),
+              );
+            }),
+          ),
+        ],
       ),
     );
   }
